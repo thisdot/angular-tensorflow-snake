@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "snake",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
