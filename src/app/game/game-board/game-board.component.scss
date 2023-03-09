@@ -1,0 +1,25 @@
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-height), 1fr);
+  grid-template-rows: repeat(var(--grid-width), 1fr);
+  border: 1px solid gray;
+  max-width: 500px;
+
+  &__tile {
+    background-color: lightgray;
+    border: 1px solid gray;
+    padding-bottom: 100%;
+
+    &--snake {
+      background: green;
+    }
+
+    &--snake-head {
+      background: greenyellow;
+    }
+
+    &--food {
+      background: red;
+    }
+  }
+}

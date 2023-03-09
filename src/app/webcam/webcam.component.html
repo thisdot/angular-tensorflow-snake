@@ -1,3 +1,10 @@
-<video snakeCameraFeed snakeHandDetector width="320" height="240"></video>
+<video
+  snakeCameraFeed
+  snakeHandDetector
+  width="320"
+  height="240"
+  (detectorCreated)="detectorCreated()"
+  (directionChange)="estimatedDirectionChange($event)"
+></video>
 
-<strong>{{ estimatedDirection$ | async }}</strong>
+<strong>{{ estimatedDirection }}</strong>

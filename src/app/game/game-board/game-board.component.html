@@ -1,0 +1,11 @@
+<div
+  class="game-board"
+  [style.--grid-width]="gridSize.width"
+  [style.--grid-height]="gridSize.height"
+>
+  <div
+    class="game-board__tile"
+    *ngFor="let tile of tiles; let i = index"
+    [ngClass]="{ 'game-board__tile--snake': tileHasSnake(i), 'game-board__tile--snake-head': tileHasSnakeHead(i), 'game-board__tile--food': tileHasFood(i) }"
+  ></div>
+</div>
