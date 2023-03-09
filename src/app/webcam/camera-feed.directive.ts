@@ -1,4 +1,10 @@
-import { Directive, ElementRef, Inject, NgZone } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Inject,
+  NgZone,
+  OnDestroy,
+} from '@angular/core';
 import { NAVIGATOR, NAVIGATOR_PROVIDERS } from './navigator.service';
 
 @Directive({
@@ -6,12 +12,18 @@ import { NAVIGATOR, NAVIGATOR_PROVIDERS } from './navigator.service';
   standalone: true,
   providers: [NAVIGATOR_PROVIDERS],
 })
-export class CameraFeedDirective {
+export class CameraFeedDirective implements OnDestroy {
   constructor(
     private elementRef: ElementRef<HTMLVideoElement>,
     @Inject(NAVIGATOR) private navigator: Navigator,
     private zone: NgZone
   ) {
+    if (typeof this.elementRef.nativeElement.play !== 'function') {
+      throw new Error(
+        'Oops! Looks like you added the CameraFeedDirective to the wrong element. It only works on <video> elements.'
+      );
+    }
+
     this.zone.runOutsideAngular(() => {
       this.navigator.mediaDevices
         .getUserMedia({ video: true, audio: false })
@@ -21,8 +33,17 @@ export class CameraFeedDirective {
           nativeElement.play();
         })
         .catch((err) => {
-          console.error(`Oops. Coul not initialize camera stream!`, err);
+          console.error(`Oops. Could not initialize camera stream!`, err);
         });
     });
+  }
+
+  ngOnDestroy() {
+    const nativeElement = this.elementRef.nativeElement;
+    if (nativeElement.srcObject) {
+      const localMediaStream = nativeElement.srcObject as MediaStream;
+      localMediaStream.getTracks().forEach((track) => track.stop());
+      nativeElement.srcObject = null;
+    }
   }
 }

@@ -1,7 +1,9 @@
-import { Directive, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Directive, ElementRef, NgZone, OnDestroy } from '@angular/core';
 
+import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
 import * as handdetection from '@tensorflow-models/hand-pose-detection';
+
 import { Subject } from 'rxjs';
 
 type Direction = 'left' | 'right' | 'up' | 'down';
@@ -15,7 +17,7 @@ type Delta = {
   selector: '[snakeHandDetector]',
   standalone: true,
 })
-export class HandDetectorDirective {
+export class HandDetectorDirective implements OnDestroy {
   private _directionSource = new Subject<Direction>();
 
   public direction$ = this._directionSource.asObservable();
@@ -26,14 +28,23 @@ export class HandDetectorDirective {
     private elementRef: ElementRef<HTMLVideoElement>,
     private zone: NgZone
   ) {
-    if (typeof this.elementRef.nativeElement.play !== 'function')
+    if (typeof this.elementRef.nativeElement.play !== 'function') {
       throw new Error(
         'Oops! Looks like you added the HandDetectorDirective to the wrong element. It only works on <video> elements.'
       );
+    }
     this.createDetector();
   }
 
+  public ngOnDestroy(): void {
+    tf.dispose();
+    this.detector?.reset();
+    this.detector?.dispose();
+    this.detector = undefined;
+  }
+
   public createDetector() {
+    console.log('create det');
     handdetection
       .createDetector(handdetection.SupportedModels.MediaPipeHands, {
         runtime: 'tfjs',
@@ -45,7 +56,7 @@ export class HandDetectorDirective {
       });
   }
 
-  public runDetection() {
+  private runDetection() {
     if (this.detector) {
       this.detector
         .estimateHands(this.elementRef.nativeElement)

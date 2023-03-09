@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { NAVIGATOR_PROVIDERS } from './navigator.service';
 
 import { AsyncPipe } from '@angular/common';
 import { HandDetectorDirective } from './hand-detector.directive';
