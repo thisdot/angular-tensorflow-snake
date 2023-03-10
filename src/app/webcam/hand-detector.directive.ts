@@ -1,12 +1,16 @@
-import { Directive, ElementRef, NgZone, OnDestroy } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  OnDestroy,
+  Output,
+} from '@angular/core';
 
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
 import * as handdetection from '@tensorflow-models/hand-pose-detection';
-
-import { Subject } from 'rxjs';
-
-type Direction = 'left' | 'right' | 'up' | 'down';
+import { Direction } from '../game/game.model';
 
 type Delta = {
   direction: Direction;
@@ -18,9 +22,11 @@ type Delta = {
   standalone: true,
 })
 export class HandDetectorDirective implements OnDestroy {
-  private _directionSource = new Subject<Direction>();
+  @Output()
+  public directionChange = new EventEmitter<Direction>();
 
-  public direction$ = this._directionSource.asObservable();
+  @Output()
+  public detectorCreated = new EventEmitter<void>();
 
   public detector?: handdetection.HandDetector;
 
@@ -52,6 +58,7 @@ export class HandDetectorDirective implements OnDestroy {
       })
       .then((detector) => {
         this.detector = detector;
+        this.detectorCreated.emit();
         this.runDetection();
       });
   }
@@ -69,7 +76,7 @@ export class HandDetectorDirective implements OnDestroy {
 
             const direction = this.getHandDirection(predictions[0].keypoints);
             this.zone.run(() => {
-              this._directionSource.next(direction);
+              this.directionChange.emit(direction);
             });
 
             requestAnimationFrame(() => this.runDetection());
@@ -95,10 +102,19 @@ export class HandDetectorDirective implements OnDestroy {
     const rightmostFingerPoint = fingerTips[fingerTips.length - 1];
 
     const deltas: Delta[] = [
-      { direction: 'left', delta: centerPoint.x - leftmostFingerPoint.x },
-      { direction: 'right', delta: rightmostFingerPoint.x - centerPoint.x },
-      { direction: 'up', delta: centerPoint.y - upmostFingerPoint.y },
-      { direction: 'down', delta: downmostFingerPoint.y - centerPoint.y },
+      {
+        direction: Direction.Left,
+        delta: centerPoint.x - leftmostFingerPoint.x,
+      },
+      {
+        direction: Direction.Right,
+        delta: rightmostFingerPoint.x - centerPoint.x,
+      },
+      { direction: Direction.Up, delta: centerPoint.y - upmostFingerPoint.y },
+      {
+        direction: Direction.Down,
+        delta: downmostFingerPoint.y - centerPoint.y,
+      },
     ];
 
     deltas.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
