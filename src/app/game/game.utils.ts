@@ -2,10 +2,12 @@ import { Coordinates, Direction } from './game.model';
 
 export class GameUtils {
   public static arePointsEqual(
-    point1: Coordinates,
-    point2: Coordinates
+    point1?: Coordinates | null,
+    point2?: Coordinates | null
   ): boolean {
-    return point1 && point2 && point1.x === point2.x && point1.y === point2.y;
+    return (
+      !!point1 && !!point2 && point1.x === point2.x && point1.y === point2.y
+    );
   }
 
   public static directionToCoordinates(direction: Direction): Coordinates {

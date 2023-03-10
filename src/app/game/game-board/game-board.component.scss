@@ -1,7 +1,7 @@
 .game-board {
   display: grid;
-  grid-template-columns: repeat(var(--grid-height), 1fr);
-  grid-template-rows: repeat(var(--grid-width), 1fr);
+  grid-template-columns: repeat(var(--grid-width), 1fr);
+  grid-template-rows: repeat(var(--grid-height), 1fr);
   border: 1px solid gray;
   max-width: 500px;
 

@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {
   Coordinates,
+  DEFAULT_DIRECTION,
   DEFAULT_GRID_SIZE,
   DEFAULT_SPEED,
   Direction,
@@ -17,12 +18,11 @@ import { GameUtils } from './game.utils';
   providedIn: 'root',
 })
 export class GameService {
-  private snake: Snake = [{ x: 0, y: 0 }];
+  private snake: Snake = new Snake([{ x: 0, y: 0 }], DEFAULT_DIRECTION);
   private food: Coordinates = { x: 1, y: 0 };
   private gridSize: GridSize = DEFAULT_GRID_SIZE;
   private speed = DEFAULT_SPEED;
-  private direction: Direction = Direction.Right;
-  private lastDirection: Direction = Direction.Right;
+  private direction: Direction = DEFAULT_DIRECTION;
   private status = GameStatus.Initial;
 
   private lastTick = 0;
@@ -44,29 +44,20 @@ export class GameService {
     this.gridSize = !!config?.gridSize ? config.gridSize : DEFAULT_GRID_SIZE;
     this.gridSizeSource.next(this.gridSize);
 
-    this.snake = !!config?.snakeStart
-      ? config.snakeStart
-      : [this.randomCoordinates()];
+    this.snake = !!config?.snake
+      ? config.snake
+      : new Snake([this.randomCoordinates()]);
 
-    if (this.isOutsideOfBounds(this.snake[0])) {
+    if (this.isOutsideOfBounds(this.snake.segments)) {
       console.warn(
         'Provided snake position was outside of bounds, resetting to a random position.'
       );
-      this.snake = [this.randomCoordinates()];
+      this.snake.segments = [this.randomCoordinates()];
     }
 
-    if (this.isOutsideOfBounds(this.snake[0])) {
-      console.warn(
-        'Provided snake position was outside of bounds, resetting to a random position.'
-      );
-      this.snake = [this.randomCoordinates()];
-    }
+    this.food = !!config?.food ? config.food : this.randomFoodCoordinates();
 
-    this.food = !!config?.foodStart
-      ? config.foodStart
-      : this.randomFoodCoordinates();
-
-    if (this.isOutsideOfBounds(this.food)) {
+    if (this.isPointOutsideOfBounds(this.food)) {
       console.warn(
         'Provided food position was outside of bounds, resetting to a random position.'
       );
@@ -87,8 +78,8 @@ export class GameService {
   }
 
   public setDirection(direction: Direction): void {
-    if (this.snake.length > 1) {
-      if (GameUtils.areDirectionsOpposite(direction, this.lastDirection)) {
+    if (this.snake.body.length > 0) {
+      if (GameUtils.areDirectionsOpposite(direction, this.snake.direction)) {
         return;
       }
     }
@@ -121,13 +112,16 @@ export class GameService {
         this.direction
       );
       const newHead: Coordinates = {
-        x: this.snake[0].x + directionCoordinates.x,
-        y: this.snake[0].y + directionCoordinates.y,
+        x: this.snake.head.x + directionCoordinates.x,
+        y: this.snake.head.y + directionCoordinates.y,
       };
 
-      this.lastDirection = this.direction;
+      this.snake.direction = this.direction;
 
-      if (this.isOutsideOfBounds(newHead) || this.crashedIntoSelf(newHead)) {
+      if (
+        this.isPointOutsideOfBounds(newHead) ||
+        this.crashedIntoSelf(newHead)
+      ) {
         this.status = GameStatus.GameOver;
         this.zone.run(() => {
           this.stateSource.next({
@@ -142,10 +136,12 @@ export class GameService {
       const isEatingFood = GameUtils.arePointsEqual(newHead, this.food);
 
       if (isEatingFood) {
-        this.snake.push(this.snake[this.snake.length - 1]);
+        this.snake.segments.push(
+          this.snake.segments[this.snake.segments.length - 1]
+        );
       }
-      this.snake.pop();
-      this.snake.unshift(newHead);
+      this.snake.segments.pop();
+      this.snake.segments.unshift(newHead);
 
       if (isEatingFood) {
         this.food = this.randomFoodCoordinates();
@@ -170,24 +166,28 @@ export class GameService {
 
   private randomFoodCoordinates(): Coordinates {
     const randomCoordinates = this.randomCoordinates();
-    return this.snake.some((segment) =>
+    return this.snake.segments.some((segment) =>
       GameUtils.arePointsEqual(randomCoordinates, segment)
     )
       ? this.randomFoodCoordinates()
       : randomCoordinates;
   }
 
-  private isOutsideOfBounds(position: Coordinates): boolean {
+  private isOutsideOfBounds(points: Coordinates[]): boolean {
+    return points.some((point) => this.isPointOutsideOfBounds(point));
+  }
+
+  private isPointOutsideOfBounds(point: Coordinates): boolean {
     return (
-      position.x < 0 ||
-      position.x >= (this.gridSize?.width ?? 0) ||
-      position.y < 0 ||
-      position.y >= (this.gridSize?.height ?? 0)
+      point.x < 0 ||
+      point.x >= (this.gridSize?.width ?? 0) ||
+      point.y < 0 ||
+      point.y >= (this.gridSize?.height ?? 0)
     );
   }
 
   private crashedIntoSelf(position: Coordinates): boolean {
-    return this.snake.some((segment, index) => {
+    return this.snake.segments.some((segment, index) => {
       return index !== 1 && GameUtils.arePointsEqual(segment, position);
     });
   }

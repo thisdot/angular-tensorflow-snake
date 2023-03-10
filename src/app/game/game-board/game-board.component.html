@@ -1,11 +1,15 @@
 <div
   class="game-board"
-  [style.--grid-width]="gridSize.width"
-  [style.--grid-height]="gridSize.height"
+  [style.--grid-width]="(gridSize$ | async)?.width"
+  [style.--grid-height]="(gridSize$ | async)?.height"
 >
   <div
     class="game-board__tile"
-    *ngFor="let tile of tiles; let i = index"
-    [ngClass]="{ 'game-board__tile--snake': tileHasSnake(i), 'game-board__tile--snake-head': tileHasSnakeHead(i), 'game-board__tile--food': tileHasFood(i) }"
+    *ngFor="let tile of tiles$ | async"
+    [ngClass]="{
+      'game-board__tile--snake': tile.hasSnakeBody,
+      'game-board__tile--snake-head': tile.hasSnakeHead,
+      'game-board__tile--food': tile.hasFood
+    }"
   ></div>
 </div>

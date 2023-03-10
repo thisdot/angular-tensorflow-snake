@@ -1,9 +1,10 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameService } from '../game.service';
 import { Coordinates, GridSize, Snake } from '../game.model';
 import { GameUtils } from '../game.utils';
-import { Subject } from 'rxjs';
+import { map, Observable, Subject, withLatestFrom } from 'rxjs';
+import { Tile } from './game-board.model';
 
 @Component({
   selector: 'snake-game-board',
@@ -12,54 +13,43 @@ import { Subject } from 'rxjs';
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.scss'],
 })
-export class GameBoardComponent implements OnDestroy {
-  private unsubscribe = new Subject<void>();
-  private snake: Snake = [];
-  private food: Coordinates = { x: 0, y: 0 };
-  public gridSize: GridSize = { width: 0, height: 0 };
-
-  public get tiles() {
-    return [...Array(this.gridSize.width * this.gridSize.height).keys()];
-  }
+export class GameBoardComponent {
+  public tiles$: Observable<Tile[]> = this.gameService.state$
+    .pipe(withLatestFrom(this.gameService.gridSize$))
+    .pipe(
+      map(([{ snake, food }, { width, height }]) =>
+        [...Array(width * height).keys()].map((i) => {
+          const coordinates = this.getPointFromIndex(i, width);
+          const hasSnakeBody = this.hasSnakeBody(coordinates, snake);
+          const hasSnakeHead = GameUtils.arePointsEqual(
+            coordinates,
+            snake?.head
+          );
+          const hasFood = GameUtils.arePointsEqual(coordinates, food);
+          return {
+            coordinates,
+            hasSnakeBody,
+            hasSnakeHead,
+            hasFood,
+          };
+        })
+      )
+    );
+  public gridSize$: Observable<GridSize> = this.gameService.gridSize$;
 
   public constructor(private gameService: GameService) {}
 
-  public ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-  }
-
-  public ngOnInit(): void {
-    this.gameService.gridSize$.subscribe((gridSize) => {
-      this.gridSize = gridSize;
-    });
-
-    this.gameService.state$.subscribe((state) => {
-      this.snake = state.snake;
-      this.food = state.food;
-    });
-  }
-
-  public tileHasSnake(index: number) {
-    return this.snake.some((tile) =>
-      GameUtils.arePointsEqual(tile, this.getPointFromIndex(index))
+  private hasSnakeBody(tile: Coordinates, snake?: Snake | null) {
+    return (
+      !!snake &&
+      snake.body.some((segment) => GameUtils.arePointsEqual(segment, tile))
     );
   }
 
-  public tileHasSnakeHead(index: number) {
-    return GameUtils.arePointsEqual(
-      this.snake[0],
-      this.getPointFromIndex(index)
-    );
-  }
-
-  public tileHasFood(index: number) {
-    return GameUtils.arePointsEqual(this.food, this.getPointFromIndex(index));
-  }
-
-  private getPointFromIndex(index: number): Coordinates {
-    const x = index % this.gridSize.width;
-    const y = Math.floor(index / this.gridSize.width);
-    return { x, y };
+  private getPointFromIndex(index: number, width: number): Coordinates {
+    return {
+      x: index % width,
+      y: Math.floor(index / width),
+    };
   }
 }
