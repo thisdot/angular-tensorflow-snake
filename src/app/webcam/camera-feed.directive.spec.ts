@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CameraFeedDirective } from './camera-feed.directive';
@@ -12,7 +12,7 @@ class TestComponent {}
 
 describe('CameraFeedDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let directiveElements: any[];
+  let directiveElements: DebugElement[];
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
@@ -21,7 +21,7 @@ describe('CameraFeedDirective', () => {
 
     // all elements with an attached HighlightDirective
     directiveElements = fixture.debugElement.queryAll(
-      By.directive(CameraFeedDirective)
+      By.directive(CameraFeedDirective),
     );
   });
 

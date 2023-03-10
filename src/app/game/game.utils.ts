@@ -3,7 +3,7 @@ import { Coordinates, Direction } from './game.model';
 export class GameUtils {
   public static arePointsEqual(
     point1?: Coordinates | null,
-    point2?: Coordinates | null
+    point2?: Coordinates | null,
   ): boolean {
     return (
       !!point1 && !!point2 && point1.x === point2.x && point1.y === point2.y
@@ -25,7 +25,7 @@ export class GameUtils {
 
   public static areDirectionsOpposite(
     direction1: Direction,
-    direction2: Direction
+    direction2: Direction,
   ): boolean {
     return (
       (direction1 === Direction.Up && direction2 === Direction.Down) ||

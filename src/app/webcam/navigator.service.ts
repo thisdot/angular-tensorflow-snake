@@ -11,7 +11,7 @@ import {
 export const NAVIGATOR = new InjectionToken('NavigatorToken');
 
 export abstract class NavigatorRef {
-  get nativeNavigator(): Navigator | Object {
+  get nativeNavigator(): Navigator {
     throw new Error('Not implemented.');
   }
 }
@@ -22,7 +22,7 @@ export class BrowserNavigatorRef extends NavigatorRef {
     super();
   }
 
-  override get nativeNavigator(): Object | Navigator {
+  override get nativeNavigator(): Navigator {
     return navigator;
   }
 }
@@ -36,6 +36,7 @@ const browserNavigatorProvider: ClassProvider = {
 /* Create an injectable provider that uses the navigatorFactory function for returning the native navigator object. */
 const navigatorProvider: FactoryProvider = {
   provide: NAVIGATOR,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   useFactory: (browserWindowRef: BrowserNavigatorRef, platformId: Object) =>
     isPlatformBrowser(platformId)
       ? browserWindowRef.nativeNavigator

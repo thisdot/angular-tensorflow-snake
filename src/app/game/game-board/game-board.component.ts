@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameService } from '../game.service';
 import { Coordinates, GridSize, Snake } from '../game.model';
 import { GameUtils } from '../game.utils';
-import { map, Observable, Subject, withLatestFrom } from 'rxjs';
+import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
 
 @Component({
@@ -23,7 +23,7 @@ export class GameBoardComponent {
           const hasSnakeBody = this.hasSnakeBody(coordinates, snake);
           const hasSnakeHead = GameUtils.arePointsEqual(
             coordinates,
-            snake?.head
+            snake?.head,
           );
           const hasFood = GameUtils.arePointsEqual(coordinates, food);
           return {
@@ -32,8 +32,8 @@ export class GameBoardComponent {
             hasSnakeHead,
             hasFood,
           };
-        })
-      )
+        }),
+      ),
     );
   public gridSize$: Observable<GridSize> = this.gameService.gridSize$;
 

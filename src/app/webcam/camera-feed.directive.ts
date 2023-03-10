@@ -16,11 +16,11 @@ export class CameraFeedDirective implements OnDestroy {
   constructor(
     private elementRef: ElementRef<HTMLVideoElement>,
     @Inject(NAVIGATOR) private navigator: Navigator,
-    private zone: NgZone
+    private zone: NgZone,
   ) {
     if (typeof this.elementRef.nativeElement.play !== 'function') {
       throw new Error(
-        'Oops! Looks like you added the CameraFeedDirective to the wrong element. It only works on <video> elements.'
+        'Oops! Looks like you added the CameraFeedDirective to the wrong element. It only works on <video> elements.',
       );
     }
 
