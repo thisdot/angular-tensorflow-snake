@@ -32,11 +32,11 @@ export class HandDetectorDirective implements OnDestroy {
 
   constructor(
     private elementRef: ElementRef<HTMLVideoElement>,
-    private zone: NgZone
+    private zone: NgZone,
   ) {
     if (typeof this.elementRef.nativeElement.play !== 'function') {
       throw new Error(
-        'Oops! Looks like you added the HandDetectorDirective to the wrong element. It only works on <video> elements.'
+        'Oops! Looks like you added the HandDetectorDirective to the wrong element. It only works on <video> elements.',
       );
     }
     this.createDetector();
@@ -50,7 +50,6 @@ export class HandDetectorDirective implements OnDestroy {
   }
 
   public createDetector() {
-    console.log('create det');
     handdetection
       .createDetector(handdetection.SupportedModels.MediaPipeHands, {
         runtime: 'tfjs',
@@ -90,7 +89,7 @@ export class HandDetectorDirective implements OnDestroy {
 
     // prepare relevant keypoints (filter out what we won't need)
     const fingerTips = keypoints.filter((keypoint) =>
-      keypoint.name?.endsWith('_tip')
+      keypoint.name?.endsWith('_tip'),
     );
 
     fingerTips.sort((a, b) => b.y - a.y);
@@ -123,7 +122,7 @@ export class HandDetectorDirective implements OnDestroy {
   }
 
   private calculateCenterPoint(
-    points: handdetection.Keypoint[]
+    points: handdetection.Keypoint[],
   ): handdetection.Keypoint {
     const numPoints = points.length;
     let sumX = 0;

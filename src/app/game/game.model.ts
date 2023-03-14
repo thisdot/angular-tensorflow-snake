@@ -27,7 +27,7 @@ export class Snake {
 
   public constructor(
     segments: Coordinates[],
-    direction: Direction = DEFAULT_DIRECTION
+    direction: Direction = DEFAULT_DIRECTION,
   ) {
     this.segments = segments;
     this.direction = direction;

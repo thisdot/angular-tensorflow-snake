@@ -2,7 +2,8 @@
 <button
   (click)="startGame()"
   [disabled]="
-    !(webcamLoaded$ | async) || (gameState$ | async)?.status === 'running'
+    (webcamLoaded$ | async) === null ||
+    (gameState$ | async)?.status === 'running'
   "
 >
   Start game!
@@ -11,13 +12,14 @@
 <button
   (click)="pauseGame()"
   [disabled]="
-    !(webcamLoaded$ | async) || (gameState$ | async)?.status === 'running'
+    (webcamLoaded$ | async) === null ||
+    (gameState$ | async)?.status !== 'running'
   "
 >
   Pause game!
 </button>
 
-<button (click)="resetGame()" [disabled]="!(webcamLoaded$ | async)">
+<button (click)="resetGame()" [disabled]="(webcamLoaded$ | async) === null">
   Reset game!
 </button>
 
