@@ -1,9 +1,11 @@
 import {
   Directive,
   ElementRef,
+  EventEmitter,
   Inject,
   NgZone,
   OnDestroy,
+  Output,
 } from '@angular/core';
 import { NAVIGATOR, NAVIGATOR_PROVIDERS } from './navigator.service';
 
@@ -13,6 +15,9 @@ import { NAVIGATOR, NAVIGATOR_PROVIDERS } from './navigator.service';
   providers: [NAVIGATOR_PROVIDERS],
 })
 export class CameraFeedDirective implements OnDestroy {
+  @Output()
+  public cameraFeedCreated = new EventEmitter<void>();
+
   constructor(
     private elementRef: ElementRef<HTMLVideoElement>,
     @Inject(NAVIGATOR) private navigator: Navigator,
@@ -31,6 +36,7 @@ export class CameraFeedDirective implements OnDestroy {
           const nativeElement = this.elementRef.nativeElement;
           nativeElement.srcObject = localMediaStream;
           nativeElement.play();
+          this.cameraFeedCreated.emit();
         })
         .catch((err) => {
           console.error(`Oops. Could not initialize camera stream!`, err);

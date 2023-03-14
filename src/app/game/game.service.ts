@@ -81,7 +81,7 @@ export class GameService {
   }
 
   public setDirection(direction: Direction): void {
-    if (this.snake.body.length > 0) {
+    if (this.snake.tail) {
       if (GameUtils.areDirectionsOpposite(direction, this.snake.direction)) {
         return;
       }

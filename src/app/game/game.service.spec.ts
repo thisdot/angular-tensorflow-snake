@@ -91,12 +91,14 @@ describe('GameService', () => {
       snake: new Snake([
         { x: 2, y: 1 },
         { x: 1, y: 1 },
+        { x: 0, y: 1 },
       ]),
     });
 
     service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
       expect(snake.head).toEqual({ x: 3, y: 1 });
       expect(snake.body).toEqual([{ x: 2, y: 1 }]);
+      expect(snake.tail).toEqual({ x: 1, y: 1 });
       done();
     });
 
@@ -118,7 +120,7 @@ describe('GameService', () => {
 
     service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
       expect(snake.head).toEqual({ x: 2, y: 2 });
-      expect(snake.body).toEqual([{ x: 2, y: 1 }]);
+      expect(snake.tail).toEqual({ x: 2, y: 1 });
       done();
     });
 
@@ -140,7 +142,7 @@ describe('GameService', () => {
     service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
       // should move the snake "up", not "down"
       expect(snake.head).toEqual({ x: 1, y: 1 });
-      expect(snake.body).toEqual([{ x: 1, y: 2 }]);
+      expect(snake.tail).toEqual({ x: 1, y: 2 });
       done();
     });
 
@@ -160,10 +162,8 @@ describe('GameService', () => {
 
     service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
       expect(snake.head).toEqual({ x: 3, y: 1 });
-      expect(snake.body).toEqual([
-        { x: 2, y: 1 },
-        { x: 1, y: 1 },
-      ]);
+      expect(snake.body).toEqual([{ x: 2, y: 1 }]);
+      expect(snake.tail).toEqual({ x: 1, y: 1 });
       done();
     });
 

@@ -1,0 +1,21 @@
+<button
+  mat-fab
+  color="primary"
+  (click)="startGame()"
+  *ngIf="initialized && (gameState$ | async)?.status !== 'running'"
+  title="Start game!"
+>
+  <mat-icon>play_arrow</mat-icon>
+</button>
+
+<button
+  mat-fab
+  (click)="pauseGame()"
+  *ngIf="initialized && (gameState$ | async)?.status === 'running'"
+>
+  <mat-icon>pause</mat-icon>
+</button>
+
+<button (click)="resetGame()" mat-fab color="warn" *ngIf="initialized">
+  <mat-icon>restart_alt</mat-icon>
+</button>

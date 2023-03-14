@@ -25,12 +25,23 @@ export class GameBoardComponent {
             coordinates,
             snake?.head,
           );
+          const hasSnakeTail = GameUtils.arePointsEqual(
+            coordinates,
+            snake?.tail,
+          );
+          const rotation = hasSnakeHead
+            ? GameUtils.rotationFromDirection(snake?.direction)
+            : hasSnakeTail && snake?.tailDirection
+            ? GameUtils.rotationFromDirection(snake.tailDirection)
+            : null;
           const hasFood = GameUtils.arePointsEqual(coordinates, food);
           return {
             coordinates,
             hasSnakeBody,
             hasSnakeHead,
+            hasSnakeTail,
             hasFood,
+            rotation,
           };
         }),
       ),

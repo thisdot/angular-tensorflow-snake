@@ -4,7 +4,8 @@
   width="320"
   height="240"
   (detectorCreated)="detectorCreated()"
+  (cameraFeedCreated)="cameraFeedCreated()"
   (directionChange)="estimatedDirectionChange($event)"
 ></video>
 
-<strong>{{ estimatedDirection }}</strong>
+<strong class="estimated-direction">{{ estimatedDirection }}</strong>
