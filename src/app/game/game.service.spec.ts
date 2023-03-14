@@ -69,35 +69,21 @@ describe('GameService', () => {
     });
   });
 
-  it('should start game', () => {
-    service.start();
-    expect(service['status']).toBe(GameStatus.Running);
-  });
-
-  it('should pause game', () => {
-    service.pause();
-    expect(service['status']).toBe(GameStatus.Paused);
-  });
-
-  it('should set direction', () => {
-    service.setDirection(Direction.Up);
-    expect(service['direction']).toBe(Direction.Up);
-  });
-
-  it('should not set direction if it is opposite to the current one', () => {
-    service.setup({
-      snake: new Snake(
-        [
-          { x: 1, y: 1 },
-          { x: 2, y: 1 },
-        ],
-        Direction.Up,
-      ),
+  it('should start game', (done) => {
+    service.state$.pipe(skip(1), take(1)).subscribe(({ status }) => {
+      expect(status).toBe(GameStatus.Running);
+      done();
     });
-    service['direction'] = Direction.Up;
 
-    service.setDirection(Direction.Down);
-    expect(service['direction']).toBe(Direction.Up);
+    service.start();
+  });
+
+  it('should pause game', (done) => {
+    service.state$.pipe(skip(1), take(1)).subscribe(({ status }) => {
+      expect(status).toBe(GameStatus.Paused);
+      done();
+    });
+    service.pause();
   });
 
   it('should move the snake', (done) => {
@@ -128,7 +114,7 @@ describe('GameService', () => {
       ),
       food: { x: 5, y: 5 },
     });
-    service['direction'] = Direction.Down;
+    service.setDirection(Direction.Down);
 
     service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
       expect(snake.head).toEqual({ x: 2, y: 2 });
@@ -136,6 +122,30 @@ describe('GameService', () => {
       done();
     });
 
+    service['moveSnake']();
+  });
+
+  it('should not set direction if it is opposite to the current one', (done) => {
+    service.setup({
+      snake: new Snake(
+        [
+          { x: 1, y: 2 },
+          { x: 2, y: 2 },
+        ],
+        Direction.Up,
+      ),
+    });
+    service.setDirection(Direction.Up);
+
+    service.state$.pipe(skip(1), take(1)).subscribe(({ snake }) => {
+      // should move the snake "up", not "down"
+      expect(snake.head).toEqual({ x: 1, y: 1 });
+      expect(snake.body).toEqual([{ x: 1, y: 2 }]);
+      done();
+    });
+
+    // it shouldn't change the direction because it's the opposite and the snake would hit itself in the neck
+    service.setDirection(Direction.Down);
     service['moveSnake']();
   });
 

@@ -36,8 +36,7 @@ const browserNavigatorProvider: ClassProvider = {
 /* Create an injectable provider that uses the navigatorFactory function for returning the native navigator object. */
 const navigatorProvider: FactoryProvider = {
   provide: NAVIGATOR,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  useFactory: (browserWindowRef: BrowserNavigatorRef, platformId: Object) =>
+  useFactory: (browserWindowRef: BrowserNavigatorRef, platformId: object) =>
     isPlatformBrowser(platformId)
       ? browserWindowRef.nativeNavigator
       : new Object(),
