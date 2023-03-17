@@ -1,0 +1,63 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  justify-content: center;
+  background: #d1302a;
+  border-radius: 4px;
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    right: 6px;
+    bottom: 6px;
+    background: #e63b1c;
+    border-radius: 10px;
+  }
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    display: block;
+    background: url('/assets/buttons-overlay.svg') center center no-repeat;
+    background-size: cover;
+  }
+}
+button {
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  margin: 18px 5px;
+  border-radius: 3px;
+  border: none;
+  border-top: 1px solid #231c1b;
+  border-bottom: 4px solid #231c1b;
+  border-right: 1px solid #231c1b;
+  background: #454344;
+  padding: 0;
+  width: 50px;
+  height: 18px;
+  line-height: 16px;
+  font-size: 0.5rem;
+  color: darken(#454344, 30%);
+  text-shadow: -1px 1px 0 lighten(#454344, 10%);
+  text-transform: uppercase;
+  font-family: 'Sofia Sans Condensed', sans-serif;
+  transition: all 0.15s ease-out;
+
+  &:hover {
+    border-bottom-width: 2px;
+    border-top-width: 2px;
+  }
+
+  &:active {
+    border-top-width: 4px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+}

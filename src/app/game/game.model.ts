@@ -4,7 +4,7 @@ export type GridSize = {
 };
 
 export const DEFAULT_GRID_SIZE: GridSize = {
-  width: 10,
+  width: 15,
   height: 10,
 };
 

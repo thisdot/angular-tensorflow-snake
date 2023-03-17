@@ -1,12 +1,40 @@
 :host {
   display: flex;
-  justify-content: center;
-  padding: 4em;
-  flex-wrap: wrap;
-  gap: 1em;
+  flex-direction: column;
 }
 
-snake-game-board {
+.game-controls {
+}
+
+.cable {
+  padding-left: 40px;
+
+  &__top {
+    background-color: #c73039;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+  }
+  &__middle {
+    background-color: #c73039;
+    height: 6px;
+    width: 20px;
+    margin: 0 auto;
+    position: relative;
+    left: -7px;
+  }
+  &__bottom {
+    background-color: #c73039;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    left: -14px;
+  }
+}
+
+.board {
   display: block;
   min-width: 50%;
   flex: 1;

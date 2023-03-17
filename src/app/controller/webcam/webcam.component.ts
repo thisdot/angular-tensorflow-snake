@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { AsyncPipe } from '@angular/common';
 import { HandDetectorDirective } from './hand-detector.directive';
 import { CameraFeedDirective } from './camera-feed.directive';
-import { GameService } from '../game/game.service';
-import { Direction } from '../game/game.model';
+import { GameService } from '../../game/game.service';
+import { Direction } from '../../game/game.model';
 
 @Component({
   selector: 'snake-webcam',
@@ -17,6 +17,9 @@ export class WebcamComponent {
   private cameraFeedInitializedInternal = false;
   private handDetectorInitializedInternal = false;
   private estimatedDirectionInternal?: Direction;
+
+  @Output()
+  public detectedDirectionChange = new EventEmitter<Direction>();
 
   public get estimatedDirection(): Direction | undefined {
     return this.estimatedDirectionInternal;
@@ -34,6 +37,7 @@ export class WebcamComponent {
 
   public estimatedDirectionChange(direction: Direction): void {
     this.estimatedDirectionInternal = direction;
+    this.detectedDirectionChange.emit(direction);
     this.gameService.setDirection(direction);
   }
 

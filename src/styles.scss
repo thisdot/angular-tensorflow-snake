@@ -1,26 +1,6 @@
-@use '@angular/material' as mat;
-
 @import 'variables';
 
-@include mat.core();
-
-$angular-tensorflow-snake-primary: mat.define-palette($primary-palette);
-$angular-tensorflow-snake-accent: mat.define-palette($accent-palette);
-$angular-tensorflow-snake-warn: mat.define-palette(mat.$red-palette);
-
-$angular-tensorflow-snake-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $angular-tensorflow-snake-primary,
-      accent: $angular-tensorflow-snake-accent,
-      warn: $angular-tensorflow-snake-warn,
-    ),
-  )
-);
-
-// including theme mixins for components the app actually uses
-@include mat.core-theme($angular-tensorflow-snake-theme);
-@include mat.fab-theme($angular-tensorflow-snake-theme);
+@import 'reset';
 
 // some global styles
 html,
@@ -28,11 +8,11 @@ body {
   height: 100%;
 }
 body {
-  margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-// material icons override
-.material-icons {
-  font-family: 'Material Icons Outlined';
+  // background: rgb(90, 9, 183);
+  background: radial-gradient(
+    ellipse at top,
+    rgb(255, 255, 255) 0%,
+    rgb(223, 218, 227) 100%
+  );
 }

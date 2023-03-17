@@ -1,74 +1,202 @@
 @import 'variables';
 
+:host {
+  margin: 0 auto;
+  display: block;
+  position: relative;
+  background: rgb(66, 142, 255);
+  margin-top: 20px;
+  background: rgb(180, 184, 190);
+  background: radial-gradient(
+    circle,
+    rgba(180, 184, 190, 1) 0%,
+    rgba(227, 238, 242, 1) 41%,
+    rgba(237, 238, 244, 1) 82%
+  );
+  width: 600px;
+  padding: 0px 33px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 40px -7px;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: url('/assets/triangle.svg') left top no-repeat;
+    background-size: contain;
+    z-index: 1;
+  }
+  &::after {
+    transform: scaleX(-1);
+  }
+}
+
+.game-board-wrapper {
+  background: url('/assets/screen.svg') center center no-repeat;
+  background-size: contain;
+  position: relative;
+  z-index: 2;
+  padding: 35px 60px;
+  filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+
+  &__inner {
+    padding: 30px 10px;
+  }
+}
+
 .game-board {
   display: grid;
   grid-template-columns: repeat(var(--grid-width), 1fr);
   grid-template-rows: repeat(var(--grid-height), 1fr);
   max-width: 500px;
-  background-color: $gray;
+  position: relative;
   margin: 0 auto;
-  border-radius: 20px;
+  border: 1px solid;
+  border-image: conic-gradient(
+      from var(--angle),
+      transparent,
+      lighten($dark, 5%),
+      red,
+      orange,
+      lighten($dark, 20%),
+      lighten($dark, 10%),
+      lighten($dark, 5%),
+      red,
+      orange,
+      transparent
+    )
+    1;
 
   &__tile {
     padding-bottom: 100%;
     position: relative;
+    border-top: 1px solid lighten($dark, 5%);
+    border-left: 1px solid lighten($dark, 5%);
 
-    &--snake {
-      background: $green;
-      padding: 0;
-    }
-
+    &--snake,
     &--snake-tail {
-      background: $green;
-      border-bottom-left-radius: 50%;
-      border-bottom-right-radius: 50%;
       padding: 0;
-      transform: rotate(var(--rotation));
+      position: relative;
+
+      &::after {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        border: 1px solid;
+        border-image: conic-gradient(
+            from var(--angle),
+            green,
+            yellow,
+            lime,
+            green,
+            yellow,
+            lime
+          )
+          1;
+        animation: 2s rotate linear infinite;
+      }
     }
 
     &--snake-head {
       padding: 0;
-      background: $green;
-      border-top-left-radius: 20%;
-      border-top-right-radius: 20%;
+      position: relative;
       transform: rotate(var(--rotation));
-      &::before,
+
       &::after {
-        content: '';
-        display: block;
         position: absolute;
-        top: 2%;
-        border-radius: 50%;
-        width: 40%;
-        height: 40%;
-        background: radial-gradient(
-          ellipse at center,
-          $dark 0,
-          $dark 30%,
-          $light 30%,
-          $light 100%
-        );
-        border: 1px solid $dark;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        border: 1px solid;
+        border-image: conic-gradient(
+            from var(--angle),
+            green,
+            yellow,
+            lime,
+            green,
+            yellow,
+            lime
+          )
+          1;
+
+        animation: 2s rotate linear infinite;
       }
-      &::before {
-        left: 50%;
+
+      .eyes {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          display: block;
+          border: 1px solid;
+          height: 1px;
+          width: 4px;
+          background: linear-gradient(to right, lime, green);
+          top: 5px;
+          left: 5px;
+        }
+
+        &::before {
+          left: auto;
+          right: 5px;
+        }
       }
     }
 
     &--food {
       padding: 0;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
       &::after {
         content: '';
+        position: absolute;
         display: block;
-        background: $red;
-        width: 60%;
-        height: 60%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid;
         border-radius: 50%;
-        border: 1px solid $dark;
+        border-image: conic-gradient(
+            from var(--angle),
+            red,
+            orange,
+            transparent,
+            orange
+          )
+          1;
+        animation: 3s rotate linear infinite;
       }
     }
   }
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }

@@ -1,0 +1,12 @@
+<div class="middle">
+  <div class="middle__top">I / O</div>
+  <div class="middle__text">Press button to start</div>
+  <div class="middle__bottom"></div>
+  <div class="middle__buttons">
+    <snake-control-buttons></snake-control-buttons>
+  </div>
+</div>
+<snake-arrows [direction]="direction"></snake-arrows>
+<snake-webcam
+  (detectedDirectionChange)="directionChange($event)"
+></snake-webcam>
