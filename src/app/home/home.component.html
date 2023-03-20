@@ -1,30 +1,11 @@
-<snake-webcam></snake-webcam>
-<button
-  (click)="startGame()"
-  [disabled]="
-    (webcamLoaded$ | async) === null ||
-    (gameState$ | async)?.status === 'running'
-  "
->
-  Start game!
-</button>
-
-<button
-  (click)="pauseGame()"
-  [disabled]="
-    (webcamLoaded$ | async) === null ||
-    (gameState$ | async)?.status !== 'running'
-  "
->
-  Pause game!
-</button>
-
-<button (click)="resetGame()" [disabled]="(webcamLoaded$ | async) === null">
-  Reset game!
-</button>
-
-<p *ngIf="(gameState$ | async)?.status === 'game-over'" class="game-over">
-  Game over, you crashed!
-</p>
+<div class="game-controls">
+  <snake-webcam></snake-webcam>
+  <snake-control-buttons
+    [initialized]="controlsInitialized"
+  ></snake-control-buttons>
+  <p *ngIf="(gameState$ | async)?.status === 'game-over'" class="game-over">
+    Game over, you crashed!
+  </p>
+</div>
 
 <snake-game-board></snake-game-board>

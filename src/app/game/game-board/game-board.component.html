@@ -9,7 +9,9 @@
     [ngClass]="{
       'game-board__tile--snake': tile.hasSnakeBody,
       'game-board__tile--snake-head': tile.hasSnakeHead,
+      'game-board__tile--snake-tail': tile.hasSnakeTail,
       'game-board__tile--food': tile.hasFood
     }"
+    [style.--rotation]="tile.rotation"
   ></div>
 </div>

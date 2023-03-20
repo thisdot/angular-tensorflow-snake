@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@import 'variables';
+
+@include mat.core();
+
+$angular-tensorflow-snake-primary: mat.define-palette($primary-palette);
+$angular-tensorflow-snake-accent: mat.define-palette($accent-palette);
+$angular-tensorflow-snake-warn: mat.define-palette(mat.$red-palette);
+
+$angular-tensorflow-snake-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $angular-tensorflow-snake-primary,
+      accent: $angular-tensorflow-snake-accent,
+      warn: $angular-tensorflow-snake-warn,
+    ),
+  )
+);
+
+// including theme mixins for components the app actually uses
+@include mat.core-theme($angular-tensorflow-snake-theme);
+@include mat.fab-theme($angular-tensorflow-snake-theme);
+
+// some global styles
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// material icons override
+.material-icons {
+  font-family: 'Material Icons Outlined';
+}

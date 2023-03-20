@@ -1,25 +1,74 @@
+@import 'variables';
+
 .game-board {
   display: grid;
   grid-template-columns: repeat(var(--grid-width), 1fr);
   grid-template-rows: repeat(var(--grid-height), 1fr);
-  border: 1px solid gray;
   max-width: 500px;
+  background-color: $gray;
+  margin: 0 auto;
+  border-radius: 20px;
 
   &__tile {
-    background-color: lightgray;
-    border: 1px solid gray;
     padding-bottom: 100%;
+    position: relative;
 
     &--snake {
-      background: green;
+      background: $green;
+      padding: 0;
+    }
+
+    &--snake-tail {
+      background: $green;
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      padding: 0;
+      transform: rotate(var(--rotation));
     }
 
     &--snake-head {
-      background: greenyellow;
+      padding: 0;
+      background: $green;
+      border-top-left-radius: 20%;
+      border-top-right-radius: 20%;
+      transform: rotate(var(--rotation));
+      &::before,
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 2%;
+        border-radius: 50%;
+        width: 40%;
+        height: 40%;
+        background: radial-gradient(
+          ellipse at center,
+          $dark 0,
+          $dark 30%,
+          $light 30%,
+          $light 100%
+        );
+        border: 1px solid $dark;
+      }
+      &::before {
+        left: 50%;
+      }
     }
 
     &--food {
-      background: red;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &::after {
+        content: '';
+        display: block;
+        background: $red;
+        width: 60%;
+        height: 60%;
+        border-radius: 50%;
+        border: 1px solid $dark;
+      }
     }
   }
 }

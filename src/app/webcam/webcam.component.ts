@@ -4,7 +4,6 @@ import { AsyncPipe } from '@angular/common';
 import { HandDetectorDirective } from './hand-detector.directive';
 import { CameraFeedDirective } from './camera-feed.directive';
 import { GameService } from '../game/game.service';
-import { Subject } from 'rxjs';
 import { Direction } from '../game/game.model';
 
 @Component({
@@ -15,14 +14,21 @@ import { Direction } from '../game/game.model';
   imports: [AsyncPipe, CameraFeedDirective, HandDetectorDirective],
 })
 export class WebcamComponent {
-  private webcamLoadedSource = new Subject<boolean>();
+  private cameraFeedInitializedInternal = false;
+  private handDetectorInitializedInternal = false;
   private estimatedDirectionInternal?: Direction;
 
   public get estimatedDirection(): Direction | undefined {
     return this.estimatedDirectionInternal;
   }
 
-  public webcamLoaded$ = this.webcamLoadedSource.asObservable();
+  public get cameraFeedInitialized() {
+    return this.cameraFeedInitializedInternal;
+  }
+
+  public get handDetectorInitialized() {
+    return this.handDetectorInitializedInternal;
+  }
 
   constructor(private gameService: GameService) {}
 
@@ -32,6 +38,10 @@ export class WebcamComponent {
   }
 
   public detectorCreated(): void {
-    this.webcamLoadedSource.next(true);
+    this.handDetectorInitializedInternal = true;
+  }
+
+  public cameraFeedCreated(): void {
+    this.cameraFeedInitializedInternal = true;
   }
 }

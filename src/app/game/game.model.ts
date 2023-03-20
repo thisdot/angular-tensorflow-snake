@@ -19,10 +19,32 @@ export class Snake {
   public direction: Direction;
   public segments: Coordinates[];
   public get body(): Coordinates[] {
-    return this.segments.slice(1);
+    return this.segments.slice(1, -1);
   }
   public get head(): Coordinates {
     return this.segments[0];
+  }
+  public get tail(): Coordinates | null {
+    return this.segments.length > 1
+      ? this.segments[this.segments.length - 1]
+      : null;
+  }
+  public get tailDirection(): Direction | null {
+    if (!this.tail) {
+      return null;
+    }
+    const lastBodySegment = this.body[this.body.length - 1] ?? this.head;
+
+    if (lastBodySegment.x - this.tail.x === 1) {
+      return Direction.Right;
+    } else if (lastBodySegment.x - this.tail.x === -1) {
+      return Direction.Left;
+    } else if (lastBodySegment.y - this.tail.y === 1) {
+      return Direction.Down;
+    } else if (lastBodySegment.y - this.tail.y === -1) {
+      return Direction.Up;
+    }
+    return null;
   }
 
   public constructor(

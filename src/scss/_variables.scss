@@ -1,0 +1,59 @@
+// base colors
+$light: #ffffff;
+$gray: #e8eaed;
+$blue: #428eff;
+$green: #38a851;
+$red: #ff5145;
+$yellow: #ffbb00;
+$dark: #202124;
+
+// color palettes
+$primary-palette: (
+  50: lighten($blue, 50%),
+  100: lighten($blue, 40%),
+  200: lighten($blue, 30%),
+  300: lighten($blue, 20%),
+  400: lighten($blue, 10%),
+  500: $blue,
+  600: darken($blue, 10%),
+  700: darken($blue, 20%),
+  800: darken($blue, 30%),
+  900: darken($blue, 40%),
+  contrast: (
+    50: $dark,
+    100: $dark,
+    200: $dark,
+    300: $light,
+    400: $light,
+    500: $light,
+    600: $light,
+    700: $light,
+    800: $light,
+    900: $light,
+  ),
+);
+
+$accent-palette: (
+  50: lighten($yellow, 50%),
+  100: lighten($yellow, 40%),
+  200: lighten($yellow, 30%),
+  300: lighten($yellow, 20%),
+  400: lighten($yellow, 10%),
+  500: $yellow,
+  600: darken($yellow, 10%),
+  700: darken($yellow, 20%),
+  800: darken($yellow, 30%),
+  900: darken($yellow, 40%),
+  contrast: (
+    50: $dark,
+    100: $dark,
+    200: $dark,
+    300: $dark,
+    400: $dark,
+    500: $dark,
+    600: $dark,
+    700: $dark,
+    800: $light,
+    900: $light,
+  ),
+);

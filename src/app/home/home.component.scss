@@ -1,3 +1,17 @@
+:host {
+  display: flex;
+  justify-content: center;
+  padding: 4em;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+snake-game-board {
+  display: block;
+  min-width: 50%;
+  flex: 1;
+}
+
 .game-over {
   color: red;
   font-weight: bold;

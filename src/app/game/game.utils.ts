@@ -34,4 +34,17 @@ export class GameUtils {
       (direction1 === Direction.Right && direction2 === Direction.Left)
     );
   }
+
+  public static rotationFromDirection(direction: Direction): `${number}deg` {
+    switch (direction) {
+      case Direction.Up:
+        return `${0}deg`;
+      case Direction.Right:
+        return `${90}deg`;
+      case Direction.Down:
+        return `${180}deg`;
+      case Direction.Left:
+        return `${270}deg`;
+    }
+  }
 }

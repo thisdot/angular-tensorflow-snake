@@ -64,6 +64,11 @@ export class HandDetectorDirective implements OnDestroy {
 
   private runDetection() {
     if (this.detector) {
+      if (this.elementRef.nativeElement.readyState !== 4) {
+        // video not ready, try again
+        requestAnimationFrame(() => this.runDetection());
+        return;
+      }
       this.detector
         .estimateHands(this.elementRef.nativeElement)
         .then((predictions) => {
@@ -80,6 +85,9 @@ export class HandDetectorDirective implements OnDestroy {
 
             requestAnimationFrame(() => this.runDetection());
           });
+        })
+        .catch((err) => {
+          console.error(err);
         });
     }
   }

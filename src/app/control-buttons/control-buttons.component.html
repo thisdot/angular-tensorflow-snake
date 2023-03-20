@@ -1,0 +1,26 @@
+<ng-container *ngIf="initialized">
+  <ng-container
+    *ngIf="gameRunning$ | async; then pauseButton; else startButton"
+  ></ng-container>
+
+  <ng-template #pauseButton>
+    <button mat-fab (click)="pauseGame()">
+      <mat-icon>pause</mat-icon>
+    </button>
+  </ng-template>
+  <ng-template #startButton>
+    <button
+      mat-fab
+      color="primary"
+      (click)="startGame()"
+      *ngIf="(gameRunning$ | async) === false"
+      title="Start game!"
+    >
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+  </ng-template>
+
+  <button (click)="resetGame()" mat-fab color="warn">
+    <mat-icon>restart_alt</mat-icon>
+  </button>
+</ng-container>
