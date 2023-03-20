@@ -1,10 +1,14 @@
 @import 'variables';
+@import 'functions';
+
+$color-dark: #454344;
+$color-darker: #231c1b;
 
 :host {
   display: flex;
   justify-content: center;
-  background: #d1302a;
-  border-radius: 4px;
+  background: $red--200;
+  border-radius: 8px;
   &::before {
     display: block;
     content: '';
@@ -13,7 +17,7 @@
     top: 6px;
     right: 3.5%;
     bottom: 6px;
-    background: #e63b1c;
+    background: $red--desaturated;
     border-radius: 10px;
   }
   &::after {
@@ -24,10 +28,12 @@
     bottom: 0;
     content: '';
     display: block;
-    background: url('/assets/buttons-overlay.svg') center center no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 35.746 13.794'%3E%3Cpath fill='#{encodecolor($red)}' d='M3.03 12.481s-1.812.145-1.812-1.811V3.125s.028-1.812 1.812-1.812h21.754L3.011 2.08s-1.153-.072-1.153 1.442v7.282s.18 1.263 1.172 1.677M18.873 12.534l13.844-.053s1.811 0 1.811-1.812V3.306l-.54 7.21s-.047 1.37-1.49 1.37c-1.009 0-13.625.648-13.625.648'/%3E%3C/svg%3E%0A")
+      center center no-repeat;
     background-size: cover;
   }
 }
+
 button {
   cursor: pointer;
   position: relative;
@@ -35,28 +41,28 @@ button {
   margin: 10% 5px;
   border-radius: 3px;
   border: none;
-  border-top: 1px solid #231c1b;
-  border-bottom: 4px solid #231c1b;
-  border-right: 1px solid #231c1b;
-  background: #454344;
+  border-top: 1px solid $color-darker;
+  border-bottom: 4px solid $color-darker;
+  border-right: 1px solid $color-darker;
+  background: $color-dark;
   padding: 0;
   width: 50px;
   height: 18px;
   line-height: 16px;
   font-size: 0.5rem;
-  color: darken(#454344, 30%);
-  text-shadow: -1px 1px 0 lighten(#454344, 10%);
+  color: lighten($color-dark, 60%);
+  text-shadow: 1px -1px 0 $dark;
   text-transform: uppercase;
   font-family: 'Sofia Sans Condensed', sans-serif;
   transition: all 0.15s ease-out;
 
   &:hover {
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
     border-top-width: 2px;
   }
 
   &:active {
-    border-top-width: 4px;
+    border-top-width: 3px;
     border-bottom-width: 2px;
     border-right-width: 2px;
   }

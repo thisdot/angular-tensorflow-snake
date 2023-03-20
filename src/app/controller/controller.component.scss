@@ -1,6 +1,10 @@
+@import 'variables';
+@import 'functions';
+
 :host {
   margin: 0 auto;
-  background: url('/assets/camera.svg') center center no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 106.275 50.912'%3E%3Cpath fill='#{encodecolor($red--200)}' d='m.372 46.76 1.43 2.809a2.458 2.458 0 0 0 2.19 1.343h99.825c1.358 0 2.458-1.1 2.458-2.458V7.574c0-.289-.05-.574-.15-.845l-2.035-5.564-.437 46.033z'/%3E%3Cpath fill='#{encodecolor($red--110)}' d='M3.16 0h98.53c1.728 0 3.128 1.4 3.128 3.129v42.105c0 1.728-1.4 3.129-3.128 3.129H3.24a3.126 3.126 0 0 1-3.128-3.108C.065 36.518-.058 11.81.032 3.092A3.125 3.125 0 0 1 3.161 0'/%3E%3C/svg%3E%0A")
+    center center no-repeat;
   background-size: contain;
   border-radius: 20px;
   padding: 20px;
@@ -18,12 +22,8 @@
     right: 3.4%;
     top: 6%;
     bottom: 9%;
-    background: rgb(230, 145, 31);
-    background: linear-gradient(
-      215deg,
-      rgba(230, 145, 31, 1) 0%,
-      rgba(230, 96, 32, 1) 50%
-    );
+    background: $orange;
+    background: linear-gradient(215deg, $orange 0%, $orange--saturated 50%);
     box-shadow: rgba(0, 0, 0, 0.05) -3px -3px 6px 1px inset;
     border-radius: 20px;
   }
@@ -36,7 +36,8 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background: url('/assets/camera-overlay.svg') center center no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 106.275 50.912'%3E%3Cg fill='#{encodecolor($red--200)}'%3E%3Cpath d='M2.05 43.51 1.973 5.7s.17-2.773 3.013-2.773H37.42L7.108 4.795s-2.884-.143-2.884 2.452C4.224 9.12 2.05 43.51 2.05 43.51M78.532 46.42h21.332s3.012-.183 3.012-2.928v-8.031s-.6 4.806-1.178 7.21c-.184.77-.48 1.826-3.46 2.306-2.073.334-19.706 1.442-19.706 1.442'/%3E%3C/g%3E%3C/svg%3E")
+      center center no-repeat;
     background-size: contain;
   }
 }
@@ -51,10 +52,11 @@
   bottom: 9%;
   font-family: 'Sofia Sans Condensed', sans-serif;
   font-weight: 600;
-  color: darken(red, 10%);
+  color: $red--300;
+  z-index: 1;
   &__top {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-    background: #fea26d;
+    background: $orange--desaturated;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     width: 100%;
@@ -65,7 +67,7 @@
     font-size: 0.6em;
   }
   &__text {
-    background: #fea26d;
+    background: $orange--desaturated;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     text-transform: uppercase;
@@ -79,7 +81,7 @@
   }
   &__bottom {
     box-shadow: rgba(0, 0, 0, 0.05) 0px -1px 2px 0px;
-    background: #fea26d;
+    background: $orange--desaturated;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 100%;

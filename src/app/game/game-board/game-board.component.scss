@@ -1,10 +1,13 @@
 @import 'variables';
+@import 'functions';
+
+$screen-color: #1e1134;
+$monitor-shade-color: #b4b8be;
 
 :host {
   margin: 0 auto;
   display: block;
   position: relative;
-  background: rgb(66, 142, 255);
   margin-top: 20px;
   background: rgb(180, 184, 190);
   background: radial-gradient(
@@ -29,7 +32,8 @@
     top: 0;
     left: 0;
     position: absolute;
-    background: url('/assets/triangle.svg') left top no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 51.188 114.201'%3E%3Cpath fill='#{encodecolor($monitor-shade-color)}' d='m0 114.2 51.188-42.536L0 0'/%3E%3C/svg%3E%0A")
+      left top no-repeat;
     background-size: 25%;
     z-index: 1;
   }
@@ -39,7 +43,8 @@
 }
 
 .game-board-wrapper {
-  background: url('/assets/screen.svg') center center no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 167.046 103.985'%3E%3Cpath fill='#{encodecolor($screen-color)}' d='M82.896.002c-1.074.002-2.147.009-3.22.018C63.46.158 47.48 1.042 34.112 2.76 20.742 4.475 9.982 7.024 4.201 10.492a45.87 45.87 0 0 0-1.322 4.35 69.674 69.674 0 0 0-1.063 4.983C.86 25.217.297 31.461.091 38.121-.116 44.781.034 51.856.5 58.91c.932 14.104 3.135 28.117 6.296 38.532 2.628 1.051 6.666 1.98 11.76 2.786 5.095.804 11.247 1.483 18.1 2.034 13.706 1.1 30.22 1.685 46.707 1.722 17.442.04 34.854-.534 48.879-1.756 7.012-.611 13.177-1.385 18.076-2.325 4.899-.94 8.53-2.047 10.476-3.326 3.162-7.067 5.124-21.33 5.887-36.602a292.75 292.75 0 0 0 .245-22.89c-.218-7.368-.736-14.213-1.554-19.763a73.857 73.857 0 0 0-.896-4.989c-.33-1.507-.692-2.85-1.086-4.002-7.005-2.78-19.355-4.93-34.242-6.35C115.19.65 99.003-.04 82.896.002zM33.911 3.769a63.17 63.17 0 0 0-.536 3.48 88.167 88.167 0 0 0 .167-1.228 63.205 63.205 0 0 1 .369-2.252zm4.708 2.864zm91.605 5.086a402.674 402.674 0 0 1 5.665.49 336.796 336.796 0 0 1-2.8-.253c-.944-.082-1.9-.16-2.865-.237zm-50.612.788zm-47.06 4.81a232.466 232.466 0 0 0-.192 5.13 316.377 316.377 0 0 0 .085-2.62c.032-.855.068-1.692.107-2.51zm98.784 10.207zM90.05 32.891zm74.179 3.58zM13.197 58.625zm4.374.057zm-13.308.007zm149.448 1.285zm-20.232 21.93zm-.022 2.82zm17.337 13.705z'/%3E%3C/svg%3E%0A")
+    center center no-repeat;
   background-size: contain;
   position: relative;
   z-index: 2;
@@ -61,31 +66,25 @@
   grid-template-columns: repeat(var(--grid-width), 1fr);
   grid-template-rows: repeat(var(--grid-height), 1fr);
   position: relative;
-  // margin: 0 auto;
   border: 1px solid;
   border-image: conic-gradient(
       from var(--angle),
-      transparent,
-      lighten($dark, 5%),
-      red,
-      orange,
-      lighten($dark, 20%),
-      lighten($dark, 10%),
-      lighten($dark, 5%),
-      red,
-      orange,
-      transparent
+      $yellow,
+      $green,
+      $purple,
+      $pink
     )
     1;
 
   &__tile {
     padding-bottom: 100%;
     position: relative;
-    border-top: 1px solid lighten($dark, 5%);
-    border-left: 1px solid lighten($dark, 5%);
+    border-top: 1px solid $dark--contrast;
+    border-left: 1px solid $dark--contrast;
 
     &--snake,
-    &--snake-tail {
+    &--snake-tail,
+    &--snake-head {
       padding: 0;
       position: relative;
 
@@ -97,48 +96,22 @@
         right: 0;
         bottom: 0;
         content: '';
-        border: 1px solid;
+        border: 1px solid $blue;
         border-image: conic-gradient(
             from var(--angle),
-            green,
-            yellow,
-            lime,
-            green,
-            yellow,
-            lime
+            $blue--70,
+            $blue,
+            $blue--95,
+            $blue--90,
+            $blue--85
           )
           1;
-        animation: 2s rotate linear infinite;
+        animation: 1s rotate linear infinite;
       }
     }
 
     &--snake-head {
-      padding: 0;
-      position: relative;
       transform: rotate(var(--rotation));
-
-      &::after {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: '';
-        border: 1px solid;
-        border-image: conic-gradient(
-            from var(--angle),
-            green,
-            yellow,
-            lime,
-            green,
-            yellow,
-            lime
-          )
-          1;
-
-        animation: 2s rotate linear infinite;
-      }
 
       .eyes {
         position: absolute;
@@ -151,14 +124,12 @@
           content: '';
           position: absolute;
           display: block;
-          border: 1px solid;
           height: 3px;
           width: 3px;
-          // background: linear-gradient(to bottom, lime, green);
-          background: lime;
+          background: $blue;
           top: 20%;
           left: 20%;
-          animation: blink 0.6s ease-in-out infinite alternate;
+          animation: blinkEyes 0.6s ease-in-out infinite alternate;
           transform: scaleY(1);
           transform-origin: center;
         }
@@ -188,13 +159,15 @@
         border-radius: 50%;
         border-image: conic-gradient(
             from var(--angle),
-            red,
-            orange,
-            transparent,
-            orange
+            $orange,
+            $red,
+            lighten($yellow, 10%),
+            $red,
+            $red,
+            $red
           )
           1;
-        animation: 3s rotate linear infinite;
+        animation: 1s rotate linear infinite;
       }
     }
   }
@@ -207,24 +180,22 @@
   z-index: 2;
   width: 12px;
   height: 12px;
-  background-color: #ff0;
+  background-color: $yellow;
   border-radius: 50%;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 4px 1px, inset #808002 0 -1px 5px,
-    #ff0 0 2px 6px;
-  animation: blinkYellow 3s ease-in-out infinite;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 4px 1px, inset $orange 0 -1px 5px,
+    $yellow 0 2px 6px;
+  animation: blinkLight 1.5s ease-in-out infinite;
 }
 
-@keyframes blinkYellow {
+@keyframes blinkLight {
   from {
-    background-color: #ff0;
+    background-color: $yellow;
   }
   50% {
-    background-color: #aa0;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 4px 1px, inset #808002 0 -1px 5px,
-      #ff0 0 2px 0;
+    background-color: darken($orange--desaturated, 5%);
   }
   to {
-    background-color: #ff0;
+    background-color: $yellow;
   }
 }
 
@@ -234,12 +205,12 @@
   }
 }
 
-@keyframes blink {
+@keyframes blinkEyes {
   0% {
     transform: scaleY(1);
   }
   100% {
-    transform: scaleY(0.1);
+    transform: scaleY(0.2);
   }
 }
 

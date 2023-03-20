@@ -30,6 +30,8 @@ export class ControlButtonsComponent {
   }
 
   public resetGame(): void {
-    this.gameService.setup();
+    this.gameService.setup({
+      gridSize: { width: 22, height: 12 },
+    });
   }
 }
