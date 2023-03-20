@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "dist/angular-tensorflow-snake",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
