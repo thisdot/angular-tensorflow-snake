@@ -5,20 +5,19 @@
   border-radius: 20px;
   padding: 20px;
   position: relative;
-  width: 400px;
-  height: 200px;
-  // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  width: 55vw;
+  height: 30vh;
+  min-height: 250px;
   margin-top: -18px;
-  // transform: perspective(150px) rotateX(5deg);
 
   &::before {
     content: '';
     display: block;
     position: absolute;
-    left: 10px;
-    right: 15px;
-    top: 28px;
-    bottom: 35px;
+    left: 2%;
+    right: 3.4%;
+    top: 6%;
+    bottom: 9%;
     background: rgb(230, 145, 31);
     background: linear-gradient(
       215deg,
@@ -44,11 +43,12 @@
 
 .middle {
   position: absolute;
-  top: 28px;
   left: 50%;
-  width: 120px;
-  margin-left: -60px;
-  height: 100%;
+  width: 15vw;
+  max-width: 150px;
+  transform: translateX(-50%);
+  top: 6%;
+  bottom: 9%;
   font-family: 'Sofia Sans Condensed', sans-serif;
   font-weight: 600;
   color: darken(red, 10%);
@@ -58,7 +58,7 @@
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     width: 100%;
-    height: 40px;
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,10 +70,11 @@
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     text-transform: uppercase;
     font-size: 0.7em;
-    padding: 10px 0;
+    padding: 10% 0;
     text-align: center;
     position: absolute;
-    top: 50px;
+    top: 50%;
+    margin-top: -30%;
     width: 100%;
   }
   &__bottom {
@@ -82,15 +83,15 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 100%;
-    height: 80px;
+    height: 35%;
     position: absolute;
-    bottom: 64px;
+    bottom: 0;
   }
   &__buttons {
     position: absolute;
     z-index: 2;
-    bottom: 70px;
-    left: -15px;
-    right: -15px;
+    bottom: 6%;
+    left: -20px;
+    right: -20px;
   }
 }

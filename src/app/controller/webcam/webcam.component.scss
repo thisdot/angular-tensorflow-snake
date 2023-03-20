@@ -1,26 +1,27 @@
 @import 'variables';
 
 :host {
-  display: flex;
+  display: block;
   border-radius: 20px;
   background: #e53c1d;
   border-left: 4px solid darken(red, 10%);
   border-bottom: 4px solid darken(red, 10%);
-  padding: 20px;
+  padding: 4px;
   position: absolute;
-  right: 30px;
+  right: 3vw;
   top: 50%;
-  margin-top: -42px;
-  width: 320px;
-  height: 240px;
-
-  transform: scale(0.25);
-  transform-origin: right top;
+  transform: translate(0, -50%);
+  width: 16vw;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 video {
   display: block;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  box-sizing: border-box;
+  border: 4px solid darken(red, 10%);
+  border-radius: 10px;
   // trick to flip the video
   transform: scaleX(-1);
-  border: 4px solid darken(red, 10%);
-  border-radius: 50px;
 }

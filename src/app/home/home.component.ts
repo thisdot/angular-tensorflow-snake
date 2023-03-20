@@ -34,6 +34,8 @@ export class HomeComponent {
   }
 
   public constructor(private gameService: GameService) {
-    this.gameService.setup();
+    this.gameService.setup({
+      gridSize: { width: 22, height: 12 },
+    });
   }
 }

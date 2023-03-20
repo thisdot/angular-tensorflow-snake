@@ -31,7 +31,7 @@
     z-index: 1;
   }
   &::after {
-    transform: scaleX(-1);
+    transform: scaleY(-1);
   }
 }
 
@@ -145,16 +145,20 @@
           position: absolute;
           display: block;
           border: 1px solid;
-          height: 1px;
-          width: 4px;
-          background: linear-gradient(to right, lime, green);
-          top: 5px;
-          left: 5px;
+          height: 3px;
+          width: 3px;
+          // background: linear-gradient(to bottom, lime, green);
+          background: lime;
+          top: 20%;
+          left: 20%;
+          animation: blink 0.6s ease-in-out infinite alternate;
+          transform: scaleY(1);
+          transform-origin: center;
         }
 
         &::before {
           left: auto;
-          right: 5px;
+          right: 20%;
         }
       }
     }
@@ -192,6 +196,15 @@
 @keyframes rotate {
   to {
     --angle: 360deg;
+  }
+}
+
+@keyframes blink {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(0.1);
   }
 }
 
