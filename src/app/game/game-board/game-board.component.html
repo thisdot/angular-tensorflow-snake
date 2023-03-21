@@ -4,6 +4,7 @@
       class="game-board"
       [style.--grid-width]="(gridSize$ | async)?.width"
       [style.--grid-height]="(gridSize$ | async)?.height"
+      *ngIf="(gameOver$ | async) !== true"
     >
       <div
         class="game-board__tile"
@@ -18,6 +19,9 @@
       >
         <div *ngIf="tile.hasSnakeHead" class="eyes"></div>
       </div>
+    </div>
+    <div class="game-over" *ngIf="gameOver$ | async">
+      Game over, you crashed!
     </div>
   </div>
   <div class="light"></div>

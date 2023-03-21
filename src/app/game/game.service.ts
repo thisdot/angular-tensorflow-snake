@@ -68,6 +68,9 @@ export class GameService {
     }
 
     this.speed = config?.initialSpeed ? config.initialSpeed : DEFAULT_SPEED;
+
+    this.status = GameStatus.Initial;
+
     this.stateSource.next({
       snake: this.snake,
       food: this.food,

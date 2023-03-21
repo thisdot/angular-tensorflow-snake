@@ -240,3 +240,13 @@ $monitor-shade-color: #b4b8be;
   initial-value: 0deg;
   inherits: false;
 }
+
+.game-over {
+  font-size: 2rem;
+  line-height: 3.5rem;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  text-shadow: 0 0 10px $blue, 0 0 20px $blue, 0 0 30px $blue, 0 0 40px $blue,
+    0 0 55px $blue, 0 0 75px $blue;
+}

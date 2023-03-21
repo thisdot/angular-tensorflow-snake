@@ -35,7 +35,14 @@
   font-family: 'Sofia Sans Condensed', sans-serif;
   transition: all 0.15s ease-out;
 
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+    border-top-width: 3px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+
+  &:hover:not(:disabled) {
     border-bottom-width: 3px;
     border-top-width: 2px;
   }
