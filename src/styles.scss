@@ -2,6 +2,10 @@
 
 @import 'reset';
 
+@import 'fonts';
+
+@import '@angular/cdk/overlay-prebuilt.css';
+
 // some global styles
 html,
 body {

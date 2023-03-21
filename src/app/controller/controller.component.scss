@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'functions';
+@import 'mixins';
 
 :host {
   margin: 0 auto;
@@ -66,18 +67,28 @@
     align-items: center;
     font-size: 1.2em;
   }
-  &__text {
+  &__instructions {
     background: $orange--desaturated;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     text-transform: uppercase;
     font-size: 1em;
-    padding: 10% 0;
     text-align: center;
     position: absolute;
     top: 50%;
     margin-top: -30%;
     width: 100%;
+
+    button {
+      @include physicalButton(
+        $height: 35,
+        $width: auto,
+        $padding: 0 15%,
+        $color: $red--110,
+        $fontSize: 0.7rem
+      );
+      box-shadow: rgba(0, 0, 0, 0.24) 0px -3px 8px;
+    }
   }
   &__bottom {
     box-shadow: rgba(0, 0, 0, 0.05) 0px -1px 2px 0px;

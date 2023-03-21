@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'functions';
+@import 'mixins';
 
 $color-dark: #454344;
 $color-darker: #231c1b;
@@ -35,35 +36,5 @@ $color-darker: #231c1b;
 }
 
 button {
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-  margin: 10% 5px;
-  border-radius: 3px;
-  border: none;
-  border-top: 1px solid $color-darker;
-  border-bottom: 4px solid $color-darker;
-  border-right: 1px solid $color-darker;
-  background: $color-dark;
-  padding: 0;
-  width: 50px;
-  height: 18px;
-  line-height: 16px;
-  font-size: 0.5rem;
-  color: lighten($color-dark, 60%);
-  text-shadow: 1px -1px 0 $dark;
-  text-transform: uppercase;
-  font-family: 'Sofia Sans Condensed', sans-serif;
-  transition: all 0.15s ease-out;
-
-  &:hover {
-    border-bottom-width: 3px;
-    border-top-width: 2px;
-  }
-
-  &:active {
-    border-top-width: 3px;
-    border-bottom-width: 2px;
-    border-right-width: 2px;
-  }
+  @include physicalButton;
 }
