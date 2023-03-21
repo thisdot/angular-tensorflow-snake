@@ -5,40 +5,61 @@ $screen-color: #1e1134;
 $monitor-shade-color: #b4b8be;
 
 :host {
-  margin: 0 auto;
   display: block;
+  padding-bottom: 20px;
   position: relative;
-  margin-top: 20px;
-  background: rgb(180, 184, 190);
-  background: radial-gradient(
-    circle,
-    rgba(180, 184, 190, 1) 0%,
-    rgba(227, 238, 242, 1) 41%,
-    rgba(237, 238, 244, 1) 82%
-  );
+  margin: 0 auto;
   max-height: 50vh;
   max-width: 100vw;
-  padding: 15px 18px;
-  box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 40px -7px;
   aspect-ratio: 11/7;
 
-  &::before,
   &::after {
     content: '';
     display: block;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
+    clear: both;
     position: absolute;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 51.188 114.201'%3E%3Cpath fill='#{encodecolor($monitor-shade-color)}' d='m0 114.2 51.188-42.536L0 0'/%3E%3C/svg%3E%0A")
-      left top no-repeat;
-    background-size: 25%;
-    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    box-sizing: border-box;
+    background: $gray;
+    border-top: 10px solid lighten($gray, 2%);
+    border-right: 2px solid lighten($gray, 2%);
+    border-bottom: 1px solid lighten($gray, 2%);
   }
-  &::after {
-    transform: scaleX(-1);
+
+  .display {
+    display: block;
+    position: relative;
+    margin-top: 20px;
+    background: rgb(180, 184, 190);
+    background: radial-gradient(
+      circle,
+      rgba(180, 184, 190, 1) 0%,
+      rgba(227, 238, 242, 1) 41%,
+      rgba(237, 238, 244, 1) 82%
+    );
+    padding: 15px 18px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 40px -7px;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 51.188 114.201'%3E%3Cpath fill='#{encodecolor($monitor-shade-color)}' d='m0 114.2 51.188-42.536L0 0'/%3E%3C/svg%3E%0A")
+        left top no-repeat;
+      background-size: 25%;
+      z-index: 1;
+    }
+    &::after {
+      transform: scaleX(-1);
+    }
   }
 }
 

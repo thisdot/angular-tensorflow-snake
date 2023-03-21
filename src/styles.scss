@@ -9,14 +9,10 @@
 // some global styles
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  // background: rgb(90, 9, 183);
-  background: radial-gradient(
-    ellipse at top,
-    rgb(255, 255, 255) 0%,
-    rgb(223, 218, 227) 100%
-  );
+  font-family: 'Sofia Sans Condensed', sans-serif;
+  background: url(/assets/images/room.jpg) left bottom no-repeat;
+  background-size: cover;
 }
