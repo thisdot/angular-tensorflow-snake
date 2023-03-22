@@ -165,11 +165,14 @@ export class HandDetectorDirective implements OnDestroy {
   }
 
   private isFingerCurl(
-    fingerTip: Keypoint3D,
-    fingerDip: Keypoint3D,
-    fingerPip: Keypoint3D,
-    fingerMcp: Keypoint3D,
+    fingerTip?: Keypoint3D,
+    fingerDip?: Keypoint3D,
+    fingerPip?: Keypoint3D,
+    fingerMcp?: Keypoint3D,
   ): boolean {
+    if (!fingerTip || !fingerDip || !fingerPip || !fingerMcp) {
+      return false;
+    }
     const dx1 = fingerTip.x - fingerDip.x;
     const dy1 = fingerTip.y - fingerDip.y;
     const dz1 = fingerTip.z - fingerDip.z;
@@ -196,10 +199,10 @@ export class HandDetectorDirective implements OnDestroy {
     for (const finger of fingers) {
       if (
         this.isFingerCurl(
-          pointMap.get(`${finger}_tip`)!,
-          pointMap.get(`${finger}_dip`)!,
-          pointMap.get(`${finger}_pip`)!,
-          pointMap.get(`${finger}_mcp`)!,
+          pointMap.get(`${finger}_tip`),
+          pointMap.get(`${finger}_dip`),
+          pointMap.get(`${finger}_pip`),
+          pointMap.get(`${finger}_mcp`),
         )
       ) {
         curledFingers.push(finger);
