@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { HandDetectorDirective } from './hand-detector.directive';
 import { CameraFeedDirective } from './camera-feed.directive';
 import { GameService } from '../../game/game.service';
@@ -11,7 +11,7 @@ import { Direction } from '../../game/game.model';
   templateUrl: './webcam.component.html',
   styleUrls: ['./webcam.component.scss'],
   standalone: true,
-  imports: [AsyncPipe, CameraFeedDirective, HandDetectorDirective],
+  imports: [AsyncPipe, CameraFeedDirective, HandDetectorDirective, NgClass],
 })
 export class WebcamComponent {
   private cameraFeedInitializedInternal = false;
