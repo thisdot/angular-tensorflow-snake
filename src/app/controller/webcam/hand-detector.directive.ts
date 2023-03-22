@@ -17,6 +17,15 @@ type Delta = {
   delta: number;
 };
 
+type Keypoint3D = handdetection.Keypoint & { z: number };
+
+type FingerName =
+  | 'thumb'
+  | 'index_finger'
+  | 'middle_finger'
+  | 'ring_finger'
+  | 'pinky_finger';
+
 @Directive({
   selector: '[snakeHandDetector]',
   standalone: true,
@@ -52,6 +61,7 @@ export class HandDetectorDirective implements OnDestroy {
       .createDetector(handdetection.SupportedModels.MediaPipeHands, {
         runtime: 'tfjs',
         modelType: 'lite',
+        maxHands: 1,
       })
       .then((detector) => {
         this.detector = detector;
@@ -76,7 +86,12 @@ export class HandDetectorDirective implements OnDestroy {
               return;
             }
 
-            const direction = this.getHandDirection(predictions[0].keypoints);
+            const direction = this.getHandDirection(
+              predictions[0].keypoints,
+              this.estimateCurledFingers(
+                predictions[0].keypoints3D as Keypoint3D[],
+              ),
+            );
             this.zone.run(() => {
               this.directionChange.emit(direction);
             });
@@ -90,12 +105,17 @@ export class HandDetectorDirective implements OnDestroy {
     }
   }
 
-  private getHandDirection(keypoints: handdetection.Keypoint[]): Direction {
+  private getHandDirection(
+    keypoints: handdetection.Keypoint[],
+    curledFingers: FingerName[],
+  ): Direction {
     const centerPoint = this.calculateCenterPoint(keypoints);
 
     // prepare relevant keypoints (filter out what we won't need)
-    const fingerTips = keypoints.filter((keypoint) =>
-      keypoint.name?.endsWith('_tip'),
+    const fingerTips = keypoints.filter(
+      (keypoint) =>
+        keypoint.name?.endsWith('_tip') &&
+        !curledFingers.some((f) => keypoint.name?.startsWith(f)),
     );
 
     fingerTips.sort((a, b) => b.y - a.y);
@@ -109,11 +129,11 @@ export class HandDetectorDirective implements OnDestroy {
     const deltas: Delta[] = [
       {
         direction: Direction.Left,
-        delta: centerPoint.x - leftmostFingerPoint.x,
+        delta: leftmostFingerPoint.x - centerPoint.x,
       },
       {
         direction: Direction.Right,
-        delta: rightmostFingerPoint.x - centerPoint.x,
+        delta: centerPoint.x - rightmostFingerPoint.x,
       },
       { direction: Direction.Up, delta: centerPoint.y - upmostFingerPoint.y },
       {
@@ -122,11 +142,10 @@ export class HandDetectorDirective implements OnDestroy {
       },
     ];
 
-    deltas.sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+    deltas.sort((a, b) => b.delta - a.delta);
 
     return deltas[0].direction;
   }
-
   private calculateCenterPoint(
     points: handdetection.Keypoint[],
   ): handdetection.Keypoint {
@@ -143,5 +162,50 @@ export class HandDetectorDirective implements OnDestroy {
       x: sumX / numPoints,
       y: sumY / numPoints,
     };
+  }
+
+  private isFingerCurl(
+    fingerTip: Keypoint3D,
+    fingerDip: Keypoint3D,
+    fingerPip: Keypoint3D,
+    fingerMcp: Keypoint3D,
+  ): boolean {
+    const dx1 = fingerTip.x - fingerDip.x;
+    const dy1 = fingerTip.y - fingerDip.y;
+    const dz1 = fingerTip.z - fingerDip.z;
+
+    const dx2 = fingerPip.x - fingerMcp.x;
+    const dy2 = fingerPip.y - fingerMcp.y;
+    const dz2 = fingerPip.z - fingerMcp.z;
+
+    return dx1 * dx2 + dy1 * dy2 + dz1 * dz2 < 0;
+  }
+
+  private estimateCurledFingers(points: Keypoint3D[]): FingerName[] {
+    const pointMap = new Map(points.map((p) => [p.name, p]));
+
+    const curledFingers: FingerName[] = [];
+
+    const fingers: FingerName[] = [
+      'index_finger',
+      'middle_finger',
+      'ring_finger',
+      'pinky_finger',
+    ];
+
+    for (const finger of fingers) {
+      if (
+        this.isFingerCurl(
+          pointMap.get(`${finger}_tip`)!,
+          pointMap.get(`${finger}_dip`)!,
+          pointMap.get(`${finger}_pip`)!,
+          pointMap.get(`${finger}_mcp`)!,
+        )
+      ) {
+        curledFingers.push(finger);
+      }
+    }
+
+    return curledFingers;
   }
 }
