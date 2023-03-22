@@ -23,6 +23,8 @@ video {
   box-sizing: border-box;
   border: 4px solid $red--200;
   border-radius: 10px;
+  min-width: 100%;
+  min-height: 100%;
   // trick to flip the video
   transform: scaleX(-1);
 }
