@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { WebcamComponent } from './webcam/webcam.component';
@@ -7,6 +7,7 @@ import { Direction } from '../game/game.model';
 import { ControlButtonsComponent } from './control-buttons/control-buttons.component';
 import { InstructionsComponent } from '../game/instructions/instructions.component';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'snake-controller',
@@ -22,8 +23,9 @@ import { ComponentPortal } from '@angular/cdk/portal';
   templateUrl: './controller.component.html',
   styleUrls: ['./controller.component.scss'],
 })
-export class ControllerComponent {
+export class ControllerComponent implements OnDestroy {
   private directionInternal: Direction = Direction.Right;
+  private unsubscribe = new Subject<void>();
 
   public constructor(private overlay: Overlay) {}
 
@@ -49,9 +51,17 @@ export class ControllerComponent {
     const componentRef = overlayRef.attach(
       new ComponentPortal(InstructionsComponent),
     );
-    componentRef.instance.closeInstructions.subscribe(() =>
-      overlayRef.dispose(),
-    );
-    overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
+    componentRef.instance.closeInstructions
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(() => overlayRef.dispose());
+    overlayRef
+      .backdropClick()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(() => overlayRef.dispose());
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

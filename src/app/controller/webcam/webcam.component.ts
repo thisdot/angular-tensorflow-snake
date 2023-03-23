@@ -37,8 +37,8 @@ export class WebcamComponent {
 
   public estimatedDirectionChange(direction: Direction): void {
     this.estimatedDirectionInternal = direction;
-    this.detectedDirectionChange.emit(direction);
     this.gameService.setDirection(direction);
+    this.detectedDirectionChange.emit(direction);
   }
 
   public detectorCreated(): void {

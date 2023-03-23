@@ -3,10 +3,16 @@
 ></ng-container>
 
 <ng-template #pauseButton>
-  <button (click)="pauseGame()">start / stop</button>
+  <button (click)="pauseGame()" title="Pause game!">start / stop</button>
 </ng-template>
 <ng-template #startButton>
   <button (click)="startGame()" title="Start game!">start / stop</button>
 </ng-template>
 
-<button (click)="resetGame()" [disabled]="gameRunning$ | async">reset</button>
+<button
+  (click)="resetGame()"
+  title="Reset game!"
+  [disabled]="gameRunning$ | async"
+>
+  reset
+</button>
