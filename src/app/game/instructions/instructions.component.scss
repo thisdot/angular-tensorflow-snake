@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'mixins';
 
 $border-width: 1.5vw;
 $border-width--inset: 0.8vw;
@@ -44,6 +45,67 @@ $border-width--inset: 0.8vw;
       text-shadow: 1px 1px 5px $red;
     }
   }
+
+  &__video {
+    border: 10px solid $green;
+    box-shadow: inset 0 0 0 5px $green--90;
+    width: fit-content;
+    padding: 5px 5px 0 5px;
+    box-sizing: border-box;
+    position: relative;
+
+    &::after {
+      content: '✔';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      background: linear-gradient(to bottom, $green, $green--90);
+      color: white;
+      font-size: 4em;
+      transition: opacity 0.3s ease-out;
+    }
+
+    &--initialized {
+      &::after {
+        opacity: 0.6;
+      }
+    }
+
+    video {
+      transform: scaleX(-1);
+    }
+  }
+
+  &__play {
+    @include physicalButton(
+      $height: 50,
+      $width: 350,
+      $color: $green,
+      $fontSize: 1.2rem
+    );
+
+    margin: 2em 0;
+
+    &[disabled] {
+      filter: grayscale(100%);
+    }
+  }
+}
+
+ul {
+  list-style: none;
+  li {
+    &::before {
+      content: '◇';
+      margin-right: 0.5em;
+    }
+  }
 }
 
 h1 {
@@ -52,6 +114,15 @@ h1 {
   text-transform: uppercase;
   color: $yellow;
   text-shadow: 1px 1px 0 $dark;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 2em;
+  text-transform: uppercase;
+  color: $green;
+  text-shadow: 1px 1px 0 $dark;
+  margin-top: 2em;
 }
 
 p {
