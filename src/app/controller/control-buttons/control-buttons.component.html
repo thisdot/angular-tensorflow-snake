@@ -1,5 +1,5 @@
 <ng-container
-  *ngIf="gameRunning$ | async; then pauseButton; else startButton"
+  *ngIf="gameRunning; then pauseButton; else startButton"
 ></ng-container>
 
 <ng-template #pauseButton>
@@ -9,10 +9,6 @@
   <button (click)="startGame()" title="Start game!">start / stop</button>
 </ng-template>
 
-<button
-  (click)="resetGame()"
-  title="Reset game!"
-  [disabled]="gameRunning$ | async"
->
+<button (click)="resetGame()" title="Reset game!" [disabled]="gameRunning">
   reset
 </button>

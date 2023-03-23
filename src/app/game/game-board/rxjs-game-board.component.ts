@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameService } from '../game.service';
+import { RxjsGameService } from '../rxjs-game.service';
 import { Coordinates, GameStatus, GridSize, Snake } from '../game.model';
 import { GameUtils } from '../game.utils';
 import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
+import { GameTileComponent } from './game-tile.component';
+import { GameServiceBase } from '../game.service.base';
 
 @Component({
-  selector: 'snake-game-board',
+  selector: 'snake-rxjs-game-board',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './game-board.component.html',
+  imports: [CommonModule, GameTileComponent],
+  templateUrl: './rxjs-game-board.component.html',
   styleUrls: ['./game-board.component.scss'],
 })
-export class GameBoardComponent {
+export class RxjsGameBoardComponent {
+  private get gameService(): RxjsGameService {
+    return this.injectedGameService as RxjsGameService;
+  }
+
   public tiles$: Observable<Tile[]> = this.gameService.state$
     .pipe(withLatestFrom(this.gameService.gridSize$))
     .pipe(
@@ -51,7 +57,7 @@ export class GameBoardComponent {
     map((state) => state.status === GameStatus.GameOver),
   );
 
-  public constructor(private gameService: GameService) {}
+  public constructor(private injectedGameService: GameServiceBase) {}
 
   private hasSnakeBody(tile: Coordinates, snake?: Snake | null) {
     return (

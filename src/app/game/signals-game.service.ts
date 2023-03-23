@@ -1,8 +1,6 @@
-import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, NgZone, signal } from '@angular/core';
 import {
   Coordinates,
-  DEFAULT_DIRECTION,
   DEFAULT_GRID_SIZE,
   DEFAULT_SPEED,
   Direction,
@@ -12,37 +10,30 @@ import {
   GridSize,
   Snake,
 } from './game.model';
+import { GameServiceBase } from './game.service.base';
+import { GameService } from './game.service.model';
 import { GameUtils } from './game.utils';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GameService {
-  private snake: Snake = new Snake([{ x: 0, y: 0 }], DEFAULT_DIRECTION);
-  private food: Coordinates = { x: 1, y: 0 };
-  private gridSize: GridSize = DEFAULT_GRID_SIZE;
-  private speed = DEFAULT_SPEED;
-  private direction: Direction = DEFAULT_DIRECTION;
-  private status = GameStatus.Initial;
-
-  private lastTick = 0;
-
-  private stateSource = new BehaviorSubject<GameState>({
+@Injectable()
+export class SignalsGameService extends GameServiceBase implements GameService {
+  public state = signal<GameState>({
     snake: this.snake,
     food: this.food,
     status: this.status,
   });
 
-  private gridSizeSource = new BehaviorSubject<GridSize>(this.gridSize);
+  public gridSize = signal<GridSize>(this.gridSizeInternal);
 
-  public state$ = this.stateSource.asObservable();
-  public gridSize$ = this.gridSizeSource.asObservable();
+  public constructor(private zone: NgZone) {
+    super();
+  }
 
-  constructor(private zone: NgZone) {}
+  public override setup(config?: GameConfig): void {
+    this.gridSizeInternal = config?.gridSize
+      ? config.gridSize
+      : DEFAULT_GRID_SIZE;
 
-  public setup(config?: GameConfig): void {
-    this.gridSize = config?.gridSize ? config.gridSize : DEFAULT_GRID_SIZE;
-    this.gridSizeSource.next(this.gridSize);
+    this.gridSize.set(this.gridSizeInternal);
 
     this.snake = config?.snake
       ? config.snake
@@ -71,19 +62,19 @@ export class GameService {
 
     this.status = GameStatus.Initial;
 
-    this.stateSource.next({
+    this.state.set({
       snake: this.snake,
       food: this.food,
       status: this.status,
     });
   }
 
-  public start(): void {
+  public override start(): void {
     this.status = GameStatus.Running;
     this.tick(0);
   }
 
-  public setDirection(direction: Direction): void {
+  public override setDirection(direction: Direction): void {
     if (this.snake.tail) {
       if (GameUtils.areDirectionsOpposite(direction, this.snake.direction)) {
         return;
@@ -92,9 +83,9 @@ export class GameService {
     this.direction = direction;
   }
 
-  public pause(): void {
+  public override pause(): void {
     this.status = GameStatus.Paused;
-    this.stateSource.next({
+    this.state.set({
       snake: this.snake,
       food: this.food,
       status: this.status,
@@ -129,12 +120,10 @@ export class GameService {
         this.isPointOnSnake(newHead)
       ) {
         this.status = GameStatus.GameOver;
-        this.zone.run(() => {
-          this.stateSource.next({
-            snake: this.snake,
-            food: this.food,
-            status: this.status,
-          });
+        this.state.set({
+          snake: this.snake,
+          food: this.food,
+          status: this.status,
         });
         return;
       }
@@ -153,61 +142,11 @@ export class GameService {
         this.food = this.randomFoodCoordinates();
       }
 
-      this.zone.run(() => {
-        this.stateSource.next({
-          snake: this.snake,
-          food: this.food,
-          status: this.status,
-        });
+      this.state.set({
+        snake: this.snake,
+        food: this.food,
+        status: this.status,
       });
-    });
-  }
-
-  private randomCoordinates(avoidEdges?: boolean): Coordinates {
-    let xMin = 0;
-    let yMin = 0;
-    let xMax = this.gridSize?.width - 1 ?? 9;
-    let yMax = this.gridSize.height - 1 ?? 9;
-
-    if (avoidEdges) {
-      xMin++;
-      yMin++;
-      xMax--;
-      yMax--;
-    }
-    const x = Math.floor(Math.random() * (xMax - xMin + 1)) + xMin;
-    const y = Math.floor(Math.random() * (yMax - yMin + 1)) + yMin;
-    return {
-      x,
-      y,
-    };
-  }
-
-  private randomFoodCoordinates(): Coordinates {
-    const randomCoordinates = this.randomCoordinates(true);
-    return this.snake.segments.some((segment) =>
-      GameUtils.arePointsEqual(randomCoordinates, segment),
-    )
-      ? this.randomFoodCoordinates()
-      : randomCoordinates;
-  }
-
-  private isOutsideOfBounds(points: Coordinates[]): boolean {
-    return points.some((point) => this.isPointOutsideOfBounds(point));
-  }
-
-  private isPointOutsideOfBounds(point: Coordinates): boolean {
-    return (
-      point.x < 0 ||
-      point.x >= (this.gridSize?.width ?? 0) ||
-      point.y < 0 ||
-      point.y >= (this.gridSize?.height ?? 0)
-    );
-  }
-
-  private isPointOnSnake(position: Coordinates): boolean {
-    return this.snake.segments.some((segment) => {
-      return GameUtils.arePointsEqual(segment, position);
     });
   }
 }

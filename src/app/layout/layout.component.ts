@@ -1,29 +1,31 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WebcamComponent } from '../controller/webcam/webcam.component';
-import { GameBoardComponent } from '../game/game-board/game-board.component';
-import { GameService } from '../game/game.service';
 import { ControlButtonsComponent } from '../controller/control-buttons/control-buttons.component';
 import { ControllerComponent } from '../controller/controller.component';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subject, takeUntil } from 'rxjs';
 import { InstructionsComponent } from '../game/instructions/instructions.component';
+import { GameServiceBase } from '../game/game.service.base';
+import { CableComponent } from './cable.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'snake-home',
+  selector: 'snake-layout',
   standalone: true,
   imports: [
     CommonModule,
     ControllerComponent,
-    GameBoardComponent,
     ControlButtonsComponent,
+    CableComponent,
     OverlayModule,
+    RouterOutlet,
   ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
 })
-export class HomeComponent implements OnDestroy {
+export class LayoutComponent implements OnDestroy {
   private unsubscribe = new Subject<void>();
 
   @ViewChild(WebcamComponent)
@@ -36,12 +38,8 @@ export class HomeComponent implements OnDestroy {
     );
   }
 
-  public get gameState$() {
-    return this.gameService.state$;
-  }
-
   public constructor(
-    private gameService: GameService,
+    private gameService: GameServiceBase,
     private overlay: Overlay,
   ) {
     this.gameService.setup({
