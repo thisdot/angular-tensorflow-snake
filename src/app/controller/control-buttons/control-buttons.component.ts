@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { GameService } from '../game/game.service';
+import { GameService } from '../../game/game.service';
 import { map } from 'rxjs/operators';
-import { GameStatus } from '../game/game.model';
+import { GameStatus } from '../../game/game.model';
 
 @Component({
   selector: 'snake-control-buttons',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule],
   templateUrl: './control-buttons.component.html',
   styleUrls: ['./control-buttons.component.scss'],
 })
@@ -32,6 +30,8 @@ export class ControlButtonsComponent {
   }
 
   public resetGame(): void {
-    this.gameService.setup();
+    this.gameService.setup({
+      gridSize: { width: 22, height: 12 },
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameService } from '../game.service';
-import { Coordinates, GridSize, Snake } from '../game.model';
+import { Coordinates, GameStatus, GridSize, Snake } from '../game.model';
 import { GameUtils } from '../game.utils';
 import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
@@ -47,6 +47,9 @@ export class GameBoardComponent {
       ),
     );
   public gridSize$: Observable<GridSize> = this.gameService.gridSize$;
+  public gameOver$: Observable<boolean> = this.gameService.state$.pipe(
+    map((state) => state.status === GameStatus.GameOver),
+  );
 
   public constructor(private gameService: GameService) {}
 

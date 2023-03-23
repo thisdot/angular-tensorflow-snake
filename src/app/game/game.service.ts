@@ -68,6 +68,9 @@ export class GameService {
     }
 
     this.speed = config?.initialSpeed ? config.initialSpeed : DEFAULT_SPEED;
+
+    this.status = GameStatus.Initial;
+
     this.stateSource.next({
       snake: this.snake,
       food: this.food,
@@ -160,15 +163,28 @@ export class GameService {
     });
   }
 
-  private randomCoordinates(): Coordinates {
+  private randomCoordinates(avoidEdges?: boolean): Coordinates {
+    let xMin = 0;
+    let yMin = 0;
+    let xMax = this.gridSize?.width - 1 ?? 9;
+    let yMax = this.gridSize.height - 1 ?? 9;
+
+    if (avoidEdges) {
+      xMin++;
+      yMin++;
+      xMax--;
+      yMax--;
+    }
+    const x = Math.floor(Math.random() * (xMax - xMin + 1)) + xMin;
+    const y = Math.floor(Math.random() * (yMax - yMin + 1)) + yMin;
     return {
-      x: Math.floor(Math.random() * (this.gridSize?.width ?? 0)),
-      y: Math.floor(Math.random() * (this.gridSize?.height ?? 0)),
+      x,
+      y,
     };
   }
 
   private randomFoodCoordinates(): Coordinates {
-    const randomCoordinates = this.randomCoordinates();
+    const randomCoordinates = this.randomCoordinates(true);
     return this.snake.segments.some((segment) =>
       GameUtils.arePointsEqual(randomCoordinates, segment),
     )

@@ -1,0 +1,59 @@
+@import 'variables';
+
+$border-width: 1.5vw;
+$border-width--inset: 0.8vw;
+
+:host {
+  display: block;
+  position: relative;
+  font-family: 'Press Start 2P', cursive;
+  display: block;
+  min-width: 60vw;
+  min-height: 50vh;
+  font-size: 0.6em;
+  line-height: 2em;
+  border: $border-width solid $blue;
+  box-shadow: inset 0 0 0 $border-width--inset $blue--90;
+  background-color: $blue--65;
+  background: radial-gradient(circle, $blue--65 0%, white 50%, $blue--65 100%);
+  color: $dark;
+  box-sizing: border-box;
+}
+
+.instructions {
+  margin: $border-width--inset;
+  padding: 4em;
+  box-sizing: border-box;
+  overflow-y: auto;
+  height: calc(100% - $border-width--inset * 2);
+
+  &__close {
+    position: absolute;
+    top: 2vw;
+    right: 2vw;
+    background: none;
+    border: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    color: $red;
+    text-shadow: 1px 1px 0 $dark;
+    cursor: pointer;
+    transition: color 0.2s ease-out, text-shadow 0.2s ease-out;
+    &:hover {
+      color: $red--200;
+      text-shadow: 1px 1px 5px $red;
+    }
+  }
+}
+
+h1 {
+  font-size: 2.5em;
+  line-height: 2em;
+  text-transform: uppercase;
+  color: $yellow;
+  text-shadow: 1px 1px 0 $dark;
+}
+
+p {
+  margin: 2em 0;
+}

@@ -1,16 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WebcamComponent } from '../webcam/webcam.component';
+import { WebcamComponent } from '../controller/webcam/webcam.component';
 import { GameBoardComponent } from '../game/game-board/game-board.component';
 import { GameService } from '../game/game.service';
-import { ControlButtonsComponent } from '../control-buttons/control-buttons.component';
+import { ControlButtonsComponent } from '../controller/control-buttons/control-buttons.component';
+import { ControllerComponent } from '../controller/controller.component';
 
 @Component({
   selector: 'snake-home',
   standalone: true,
   imports: [
     CommonModule,
-    WebcamComponent,
+    ControllerComponent,
     GameBoardComponent,
     ControlButtonsComponent,
   ],
@@ -33,6 +34,8 @@ export class HomeComponent {
   }
 
   public constructor(private gameService: GameService) {
-    this.gameService.setup();
+    this.gameService.setup({
+      gridSize: { width: 22, height: 12 },
+    });
   }
 }

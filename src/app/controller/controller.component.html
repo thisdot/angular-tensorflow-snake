@@ -1,0 +1,14 @@
+<div class="middle">
+  <div class="middle__top">Google I/O 2023</div>
+  <div class="middle__instructions">
+    <button type="button" (click)="showInstructions()">Instructions</button>
+  </div>
+  <div class="middle__bottom"></div>
+  <div class="middle__buttons">
+    <snake-control-buttons></snake-control-buttons>
+  </div>
+</div>
+<snake-arrows [direction]="direction"></snake-arrows>
+<snake-webcam
+  (detectedDirectionChange)="directionChange($event)"
+></snake-webcam>

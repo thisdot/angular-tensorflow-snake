@@ -1,11 +1,9 @@
-<div class="game-controls">
-  <snake-webcam></snake-webcam>
-  <snake-control-buttons
-    [initialized]="controlsInitialized"
-  ></snake-control-buttons>
-  <p *ngIf="(gameState$ | async)?.status === 'game-over'" class="game-over">
-    Game over, you crashed!
-  </p>
+<div class="board">
+  <snake-game-board></snake-game-board>
 </div>
-
-<snake-game-board></snake-game-board>
+<div class="cable">
+  <div class="cable__top"></div>
+  <div class="cable__middle"></div>
+  <div class="cable__bottom"></div>
+</div>
+<snake-controller></snake-controller>

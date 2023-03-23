@@ -1,38 +1,18 @@
-@use '@angular/material' as mat;
-
 @import 'variables';
 
-@include mat.core();
+@import 'reset';
 
-$angular-tensorflow-snake-primary: mat.define-palette($primary-palette);
-$angular-tensorflow-snake-accent: mat.define-palette($accent-palette);
-$angular-tensorflow-snake-warn: mat.define-palette(mat.$red-palette);
+@import 'fonts';
 
-$angular-tensorflow-snake-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $angular-tensorflow-snake-primary,
-      accent: $angular-tensorflow-snake-accent,
-      warn: $angular-tensorflow-snake-warn,
-    ),
-  )
-);
-
-// including theme mixins for components the app actually uses
-@include mat.core-theme($angular-tensorflow-snake-theme);
-@include mat.fab-theme($angular-tensorflow-snake-theme);
+@import '@angular/cdk/overlay-prebuilt.css';
 
 // some global styles
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-// material icons override
-.material-icons {
-  font-family: 'Material Icons Outlined';
+  font-family: 'Sofia Sans Condensed', sans-serif;
+  background: url(/assets/images/room.jpg) left bottom no-repeat;
+  background-size: cover;
 }

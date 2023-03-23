@@ -1,17 +1,28 @@
-<div
-  class="game-board"
-  [style.--grid-width]="(gridSize$ | async)?.width"
-  [style.--grid-height]="(gridSize$ | async)?.height"
->
-  <div
-    class="game-board__tile"
-    *ngFor="let tile of tiles$ | async"
-    [ngClass]="{
-      'game-board__tile--snake': tile.hasSnakeBody,
-      'game-board__tile--snake-head': tile.hasSnakeHead,
-      'game-board__tile--snake-tail': tile.hasSnakeTail,
-      'game-board__tile--food': tile.hasFood
-    }"
-    [style.--rotation]="tile.rotation"
-  ></div>
+<div class="display">
+  <div class="game-board-wrapper">
+    <div
+      class="game-board"
+      [style.--grid-width]="(gridSize$ | async)?.width"
+      [style.--grid-height]="(gridSize$ | async)?.height"
+      *ngIf="(gameOver$ | async) !== true"
+    >
+      <div
+        class="game-board__tile"
+        *ngFor="let tile of tiles$ | async"
+        [ngClass]="{
+          'game-board__tile--snake': tile.hasSnakeBody,
+          'game-board__tile--snake-head': tile.hasSnakeHead,
+          'game-board__tile--snake-tail': tile.hasSnakeTail,
+          'game-board__tile--food': tile.hasFood
+        }"
+        [style.--rotation]="tile.rotation"
+      >
+        <div *ngIf="tile.hasSnakeHead" class="eyes"></div>
+      </div>
+    </div>
+    <div class="game-over" *ngIf="gameOver$ | async">
+      Game over, you crashed!
+    </div>
+  </div>
+  <div class="light"></div>
 </div>

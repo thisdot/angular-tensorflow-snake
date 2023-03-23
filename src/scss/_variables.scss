@@ -5,7 +5,31 @@ $blue: #428eff;
 $green: #38a851;
 $red: #ff5145;
 $yellow: #ffbb00;
+$orange: #e6911f;
 $dark: #202124;
+$purple: #841ae7;
+$pink: #ff379b;
+
+// derived colors
+$red--110: darken($red, 10%);
+$red--150: darken($red, 15%);
+$red--200: darken($red, 20%);
+$red--250: darken($red, 25%);
+$red--300: darken($red, 30%);
+$red--350: darken($red, 35%);
+$red--desaturated: #df3416;
+
+$blue--110: darken($blue, 10%);
+$blue--95: lighten($blue, 5%);
+$blue--90: lighten($blue, 10%);
+$blue--85: lighten($blue, 15%);
+$blue--70: lighten($blue, 30%);
+$blue--65: lighten($blue, 35%);
+
+$orange--saturated: #e66020;
+$orange--desaturated: #fea26d;
+
+$dark--contrast: #515151;
 
 // color palettes
 $primary-palette: (

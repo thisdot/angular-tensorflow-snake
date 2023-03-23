@@ -1,12 +1,65 @@
+@import 'variables';
+
 :host {
   display: flex;
-  justify-content: center;
-  padding: 4em;
-  flex-wrap: wrap;
-  gap: 1em;
+  flex-direction: column;
+
+  &::before,
+  &::after {
+    display: block;
+    content: '';
+    position: absolute;
+    background-size: contain;
+  }
+
+  &::after {
+    width: 25vw;
+    height: 25vw;
+    background: url('/assets/images/bookshelf.svg') right top no-repeat;
+    right: 1vw;
+    top: 10vw;
+    filter: drop-shadow(-10px 0px 20px rgba(0, 0, 0, 0.5));
+  }
+
+  &::before {
+    width: 18vw;
+    height: 18vw;
+    background: url('/assets/images/bookshelf2.svg') left top no-repeat;
+    left: 2vw;
+    top: 6vw;
+    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+  }
 }
 
-snake-game-board {
+.cable {
+  padding-left: 40px;
+
+  &__top {
+    background-color: $red--200;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+  }
+  &__middle {
+    background-color: $red--200;
+    height: 6px;
+    width: 20px;
+    margin: 0 auto;
+    position: relative;
+    left: -7px;
+  }
+  &__bottom {
+    background-color: $red--200;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    left: -14px;
+  }
+}
+
+.board {
   display: block;
   min-width: 50%;
   flex: 1;

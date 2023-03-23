@@ -1,0 +1,63 @@
+@import 'variables';
+
+:host {
+  display: block;
+  border-radius: 20px;
+  background: $red--desaturated;
+  border-left: 4px solid $red--200;
+  border-bottom: 4px solid $red--200;
+  padding: 4px;
+  position: absolute;
+  right: 3vw;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 16vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+video {
+  display: block;
+  box-sizing: border-box;
+  border: 4px solid $red--200;
+  border-radius: 10px;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  min-width: 100%;
+  min-height: 100%;
+  // trick to flip the video
+  transform: scaleX(-1);
+}
+
+.placeholder {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 15px;
+
+  &__noise {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: calc(100% + 50px);
+    height: calc(100% + 50px);
+    background: repeating-linear-gradient(#111, #111 50%, white 50%, white);
+    background-size: 5px 5px;
+    filter: url(#noise);
+    opacity: 0.7;
+    transition: opacity 0.5s ease-in-out;
+    &--fadeout {
+      opacity: 0;
+    }
+  }
+
+  svg {
+    width: 0;
+    height: 0;
+  }
+}

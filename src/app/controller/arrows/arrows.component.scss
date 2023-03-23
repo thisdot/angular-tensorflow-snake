@@ -1,0 +1,198 @@
+@import 'variables';
+@import 'functions';
+
+@mixin triangle($direction, $color: $red--350, $strokeColor: $red--350) {
+  $encodedColor: encodecolor($color);
+  $encodedStrokeColor: encodecolor($strokeColor);
+
+  $points: '0,50 25,0 50,50';
+
+  @if $direction == up {
+    $points: '0,50 25,0 50,50';
+  } @else if $direction == down {
+    $points: '0,0 25,50 50,0';
+  } @else if $direction == left {
+    $points: '50,0 0,25 50,50';
+  } @else if $direction == right {
+    $points: '0,0 50,25 0,50';
+  } @else {
+    @error "Invalid direction for triangle mixin: #{$direction}. Use 'up', 'down', 'left', or 'right'.";
+  }
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Cpolygon stroke='#{$encodedStrokeColor}' stroke-width='1px' points='#{$points}' fill='#{$encodedColor}'/%3E%3C/svg%3E");
+}
+
+@mixin arrowBoxShadow($direction) {
+  @if $direction == up {
+    box-shadow: rgba(50, 50, 93, 0.15) 0px -6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px -3px 7px -3px;
+  } @else if $direction == down {
+    box-shadow: rgba(50, 50, 93, 0.15) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  } @else if $direction == left {
+    box-shadow: rgba(50, 50, 93, 0.15) -6px 0px 12px -2px,
+      rgba(0, 0, 0, 0.3) -3px 0px 7px -3px;
+  } @else if $direction == right {
+    box-shadow: rgba(50, 50, 93, 0.15) 6px 0px 12px -2px,
+      rgba(0, 0, 0, 0.3) 3px 0px 7px -3px;
+  } @else {
+    @error "Invalid direction for boxShadow mixin: #{$direction}. Use 'up', 'down', 'left', or 'right'.";
+  }
+}
+
+$border-raised: 0.4vw solid $red--250;
+$border-raised--l: 0.6vw solid $red--250;
+
+.arrow-buttons {
+  position: absolute;
+  z-index: 2;
+  width: 12vw;
+  height: 12vw;
+  top: 50%;
+  left: 6%;
+  margin-top: -6vw;
+  position: relative;
+  &__button {
+    width: 4vw;
+    height: 4vw;
+    background: $red--150;
+    position: absolute;
+    box-sizing: border-box;
+    transition: box-shadow 0.5s ease-out, border 0.5s ease-out,
+      background 0.5s ease-out;
+    box-sizing: border-box;
+    border: 0px solid transparent;
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    &--top {
+      @include triangle(up);
+      top: 0;
+      left: 4vw;
+      border-top-right-radius: 15%;
+      border-top-left-radius: 15%;
+    }
+    &--bottom {
+      @include triangle(down);
+      bottom: 1px;
+      left: 4vw;
+      border-bottom-left-radius: 15%;
+      border-bottom-right-radius: 15%;
+    }
+    &--left {
+      @include triangle(left);
+      top: 4vw;
+      left: 0;
+      border-bottom-left-radius: 15%;
+      border-top-left-radius: 15%;
+    }
+    &--right {
+      @include triangle(right);
+      top: 4vw;
+      right: 1px;
+      border-bottom-right-radius: 15%;
+      border-top-right-radius: 15%;
+    }
+
+    &--center {
+      top: 4vw;
+      left: 4vw;
+    }
+  }
+}
+
+:host {
+  &.direction--down {
+    .arrow-buttons__button {
+      &--bottom {
+        border-bottom: 1px solid $red--250;
+        border-right: 1px solid $red--250;
+        border-left: 1px solid $red--250;
+        @include triangle(down, $orange);
+      }
+      &--top {
+        border-top: $border-raised;
+        border-left: 1px solid $red--250;
+        @include arrowBoxShadow(up);
+      }
+      &--left {
+        border-left: 1px solid $red--250;
+        border-top: $border-raised;
+      }
+      &--right {
+        border-right: 1px solid $red--250;
+        border-top: $border-raised;
+      }
+    }
+  }
+  &.direction--up {
+    .arrow-buttons__button {
+      &--bottom {
+        border-bottom: $border-raised--l;
+        border-right: 1px solid $red--250;
+        border-left: 1px solid $red--250;
+        @include arrowBoxShadow(down);
+      }
+      &--top {
+        border-top: 1px solid $red--250;
+        border-left: 1px solid $red--250;
+        @include triangle(up, $orange);
+      }
+      &--left {
+        border-left: 1px solid $red--250;
+        border-bottom: $border-raised;
+      }
+      &--right {
+        border-right: 1px solid $red--250;
+        border-bottom: $border-raised;
+      }
+    }
+  }
+  &.direction--right {
+    .arrow-buttons__button {
+      &--bottom {
+        border-bottom: 1px solid $red--250;
+        border-right: 1px solid $red--250;
+        border-left: $border-raised;
+      }
+      &--top {
+        border-top: $border-raised;
+        border-left: $border-raised;
+      }
+      &--left {
+        border-left: $border-raised;
+        border-bottom: 1px solid $red--250;
+        @include arrowBoxShadow(left);
+      }
+      &--right {
+        border-right: 1px solid $red--250;
+        border-bottom: 1px solid $red--250;
+        @include triangle(right, $orange);
+      }
+    }
+  }
+  &.direction--left {
+    .arrow-buttons__button {
+      &--bottom {
+        border-bottom: 1px solid $red--250;
+        border-right: $border-raised;
+        border-left: 1px solid $red--250;
+      }
+      &--top {
+        border-top: $border-raised;
+        border-left: 1px solid $red--250;
+        border-right: $border-raised;
+      }
+      &--left {
+        border-left: 1px solid $red--250;
+        border-bottom: 2px solid $red--250;
+        @include triangle(left, $orange);
+      }
+      &--right {
+        border-right: $border-raised;
+        border-bottom: 1px solid $red--250;
+        @include arrowBoxShadow(right);
+      }
+    }
+  }
+}

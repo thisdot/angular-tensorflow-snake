@@ -1,0 +1,32 @@
+<video
+  snakeCameraFeed
+  snakeHandDetector
+  width="320"
+  height="240"
+  (detectorCreated)="detectorCreated()"
+  (cameraFeedCreated)="cameraFeedCreated()"
+  (directionChange)="estimatedDirectionChange($event)"
+></video>
+
+<div class="placeholder">
+  <div
+    class="placeholder__noise"
+    [ngClass]="{
+      'placeholder__noise--fadeout':
+        cameraFeedInitialized && handDetectorInitialized
+    }"
+  ></div>
+  <svg>
+    <filter id="noise">
+      <feTurbulence id="turbulence">
+        <animate
+          attributeName="baseFrequency"
+          dur="75s"
+          values="0.9 0.9;0.8 0.8; 0.9 0.9"
+          repeatCount="indefinite"
+        ></animate>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" scale="60"></feDisplacementMap>
+    </filter>
+  </svg>
+</div>

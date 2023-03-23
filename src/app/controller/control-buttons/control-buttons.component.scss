@@ -1,0 +1,40 @@
+@import 'variables';
+@import 'functions';
+@import 'mixins';
+
+$color-dark: #454344;
+$color-darker: #231c1b;
+
+:host {
+  display: flex;
+  justify-content: center;
+  background: $red--200;
+  border-radius: 8px;
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    left: 3.5%;
+    top: 6px;
+    right: 3.5%;
+    bottom: 6px;
+    background: $red--desaturated;
+    border-radius: 10px;
+  }
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    display: block;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 35.746 13.794'%3E%3Cpath fill='#{encodecolor($red)}' d='M3.03 12.481s-1.812.145-1.812-1.811V3.125s.028-1.812 1.812-1.812h21.754L3.011 2.08s-1.153-.072-1.153 1.442v7.282s.18 1.263 1.172 1.677M18.873 12.534l13.844-.053s1.811 0 1.811-1.812V3.306l-.54 7.21s-.047 1.37-1.49 1.37c-1.009 0-13.625.648-13.625.648'/%3E%3C/svg%3E%0A")
+      center center no-repeat;
+    background-size: cover;
+  }
+}
+
+button {
+  @include physicalButton;
+}

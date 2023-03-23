@@ -10,7 +10,7 @@ import {
 import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-backend-webgl';
 import * as handdetection from '@tensorflow-models/hand-pose-detection';
-import { Direction } from '../game/game.model';
+import { Direction } from '../../game/game.model';
 
 type Delta = {
   direction: Direction;
