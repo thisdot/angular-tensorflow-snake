@@ -1,26 +1,6 @@
 @import 'variables';
 @import 'functions';
-
-@mixin triangle($direction, $color: $red--350, $strokeColor: $red--350) {
-  $encodedColor: encodecolor($color);
-  $encodedStrokeColor: encodecolor($strokeColor);
-
-  $points: '0,50 25,0 50,50';
-
-  @if $direction == up {
-    $points: '0,50 25,0 50,50';
-  } @else if $direction == down {
-    $points: '0,0 25,50 50,0';
-  } @else if $direction == left {
-    $points: '50,0 0,25 50,50';
-  } @else if $direction == right {
-    $points: '0,0 50,25 0,50';
-  } @else {
-    @error "Invalid direction for triangle mixin: #{$direction}. Use 'up', 'down', 'left', or 'right'.";
-  }
-
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Cpolygon stroke='#{$encodedStrokeColor}' stroke-width='1px' points='#{$points}' fill='#{$encodedColor}'/%3E%3C/svg%3E");
-}
+@import 'mixins';
 
 @mixin arrowBoxShadow($direction) {
   @if $direction == up {
@@ -63,8 +43,6 @@ $border-raised--l: 0.6vw solid $red--250;
     box-sizing: border-box;
     border: 0px solid transparent;
     background-size: 30%;
-    background-repeat: no-repeat;
-    background-position: center;
     &--top {
       @include triangle(up);
       top: 0;

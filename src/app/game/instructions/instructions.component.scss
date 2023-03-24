@@ -25,7 +25,7 @@ $border-width--inset: 0.8vw;
   margin: $border-width--inset;
   padding: 4em;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: calc(100% - $border-width--inset * 2);
 
   &__close {
@@ -90,10 +90,66 @@ $border-width--inset: 0.8vw;
       $fontSize: 1.2rem
     );
 
-    margin: 2em 0;
+    margin: 1em 0;
 
     &[disabled] {
       filter: grayscale(100%);
+    }
+  }
+
+  &__accordion {
+    &__trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: none;
+      border-bottom: 2px solid $blue;
+      font-family: 'Press Start 2P', cursive;
+      background-color: transparent;
+      padding: 2em 1.5em;
+      width: 100%;
+      text-align: left;
+      color: $blue;
+      text-shadow: none;
+      // text-transform: uppercase;
+      transition: background-color 0.2s ease-out, text-shadow 0.2s ease-out,
+        color 0.2s ease-out;
+      cursor: pointer;
+
+      &__icon {
+        display: block;
+        width: 10px;
+        height: 10px;
+        transform: rotate(0);
+        transition: transform 0.2s ease-out;
+        margin-right: 1em;
+        @include triangle(
+          $direction: right,
+          $size: 10,
+          $color: $blue,
+          $strokeColor: $blue
+        );
+      }
+
+      &:hover,
+      &--expanded {
+        background-color: $blue--90;
+        color: white;
+        text-shadow: 1px 1px 0 $dark;
+        .instructions__accordion__trigger__icon {
+          transform: rotate(90deg);
+          @include triangle(
+            $direction: right,
+            $size: 10,
+            $color: white,
+            $strokeColor: $dark
+          );
+        }
+      }
+    }
+    &__panel {
+      overflow: hidden;
+      padding: 0 1.5em;
     }
   }
 }
@@ -109,7 +165,7 @@ ul {
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2.2em;
   line-height: 2em;
   text-transform: uppercase;
   color: $yellow;
@@ -122,7 +178,7 @@ h2 {
   text-transform: uppercase;
   color: $green;
   text-shadow: 1px 1px 0 $dark;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 p {

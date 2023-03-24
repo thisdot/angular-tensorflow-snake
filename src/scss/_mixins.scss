@@ -1,3 +1,5 @@
+@import 'functions';
+
 @mixin physicalButton(
   $width: 50,
   $height: 18,
@@ -52,4 +54,32 @@
     border-bottom-width: 2px;
     border-right-width: 2px;
   }
+}
+
+@mixin triangle(
+  $direction,
+  $color: $red--350,
+  $strokeColor: $red--350,
+  $size: 50
+) {
+  $encodedColor: encodecolor($color);
+  $encodedStrokeColor: encodecolor($strokeColor);
+
+  $points: '0,#{$size} #{$size/2},0 #{$size},#{$size}';
+
+  @if $direction == up {
+    $points: '0,#{$size} #{$size/2},0 #{$size},#{$size}';
+  } @else if $direction == down {
+    $points: '0,0 #{$size/2},#{$size} #{$size},0';
+  } @else if $direction == left {
+    $points: '#{$size},0 0,#{$size/2} #{$size},#{$size}';
+  } @else if $direction == right {
+    $points: '0,0 #{$size},#{$size/2} 0,#{$size}';
+  } @else {
+    @error "Invalid direction for triangle mixin: #{$direction}. Use 'up', 'down', 'left', or 'right'.";
+  }
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='#{$size}' height='#{$size}'%3E%3Cpolygon stroke='#{$encodedStrokeColor}' stroke-width='1px' points='#{$points}' fill='#{$encodedColor}'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center center;
 }
