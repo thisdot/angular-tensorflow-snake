@@ -7,6 +7,7 @@ import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
 import { GameServiceBase } from '../game.service.base';
+import { GameBoardUtils } from './game-board.utils';
 
 @Component({
   selector: 'snake-rxjs-game-board',
@@ -24,32 +25,7 @@ export class RxjsGameBoardComponent {
     .pipe(withLatestFrom(this.gameService.gridSize$))
     .pipe(
       map(([{ snake, food }, { width, height }]) =>
-        [...Array(width * height).keys()].map((i) => {
-          const coordinates = this.getPointFromIndex(i, width);
-          const hasSnakeBody = this.hasSnakeBody(coordinates, snake);
-          const hasSnakeHead = GameUtils.arePointsEqual(
-            coordinates,
-            snake?.head,
-          );
-          const hasSnakeTail = GameUtils.arePointsEqual(
-            coordinates,
-            snake?.tail,
-          );
-          const rotation = hasSnakeHead
-            ? GameUtils.rotationFromDirection(snake?.direction)
-            : hasSnakeTail && snake?.tailDirection
-            ? GameUtils.rotationFromDirection(snake.tailDirection)
-            : null;
-          const hasFood = GameUtils.arePointsEqual(coordinates, food);
-          return {
-            coordinates,
-            hasSnakeBody,
-            hasSnakeHead,
-            hasSnakeTail,
-            hasFood,
-            rotation,
-          };
-        }),
+        GameBoardUtils.computeTiles(width, height, snake, food),
       ),
     );
   public gridSize$: Observable<GridSize> = this.gameService.gridSize$;
