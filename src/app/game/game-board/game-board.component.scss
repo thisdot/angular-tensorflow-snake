@@ -118,14 +118,14 @@ $monitor-shade-color: #b4b8be;
         right: 0;
         bottom: 0;
         content: '';
-        border: 2px solid $blue;
+        border: 1px solid darken($blue, 20%);
+        background-color: $blue;
+        box-shadow: inset darken($blue, 10%) 0 0 0 2px;
         border-image: conic-gradient(
             from var(--angle),
-            $blue--70,
             $blue,
-            $blue--95,
-            $blue--90,
-            $blue--85
+            darken($blue, 10%),
+            darken($blue, 20%)
           )
           1;
         animation: 1s rotate linear infinite;
@@ -133,14 +133,14 @@ $monitor-shade-color: #b4b8be;
     }
 
     &--snake-head {
-      transform: rotate(var(--rotation));
-
       .eyes {
+        transform: rotate(var(--rotation));
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
         bottom: 0;
+        z-index: 2;
         &::before,
         &::after {
           content: '';
@@ -148,7 +148,7 @@ $monitor-shade-color: #b4b8be;
           display: block;
           height: 4px;
           width: 4px;
-          background: $blue;
+          background: darken($blue, 20%);
           top: 20%;
           left: 20%;
           animation: blinkEyes 0.6s ease-in-out infinite alternate;
