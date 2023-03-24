@@ -148,13 +148,18 @@ $monitor-shade-color: #b4b8be;
           display: block;
           height: 4px;
           width: 4px;
-          background: darken($blue, 20%);
+          background: linear-gradient(
+            to top,
+            darken($blue, 15%),
+            darken($blue, 20%),
+          );
           top: 20%;
           left: 20%;
           animation: blinkEyes 0.6s ease-in-out infinite alternate;
           transform: scaleY(1);
           transform-origin: center;
           border-radius: 50%;
+          box-shadow: $blue--70 0 0 2px;
         }
 
         &::before {
