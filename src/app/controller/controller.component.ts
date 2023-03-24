@@ -8,6 +8,7 @@ import { ControlButtonsComponent } from './control-buttons/control-buttons.compo
 import { InstructionsComponent } from '../game/instructions/instructions.component';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subject, takeUntil } from 'rxjs';
+import { RoutingSwitchComponent } from './routing-switch/routing-switch.component';
 
 @Component({
   selector: 'snake-controller',
@@ -18,6 +19,7 @@ import { Subject, takeUntil } from 'rxjs';
     WebcamComponent,
     ControlButtonsComponent,
     InstructionsComponent,
+    RoutingSwitchComponent,
     OverlayModule,
   ],
   templateUrl: './controller.component.html',
