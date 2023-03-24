@@ -12,14 +12,19 @@ import { HandDetectorDirective } from '../../controller/webcam/hand-detector.dir
   styleUrls: ['./instructions.component.scss'],
 })
 export class InstructionsComponent {
+  private controlsInitializedInternal = false;
+  private creditsExpandedInternal = false;
+
   @Output() closeInstructions = new EventEmitter<void>();
 
   @Input() public modal = false;
 
-  private controlsInitializedInternal = false;
-
   public get controlsInitialized(): boolean {
     return this.controlsInitializedInternal;
+  }
+
+  public get creditsExpanded(): boolean {
+    return this.creditsExpandedInternal;
   }
 
   public close(): void {
@@ -35,5 +40,9 @@ export class InstructionsComponent {
   public play(): void {
     sessionStorage.setItem('controlsInitialized', 'true');
     this.closeInstructions.emit();
+  }
+
+  public toggleCredits(): void {
+    this.creditsExpandedInternal = !this.creditsExpandedInternal;
   }
 }
