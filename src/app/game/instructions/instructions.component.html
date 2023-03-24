@@ -17,29 +17,30 @@
   <ng-container *ngIf="modal">
     <p>Give it a try by pointing to the right and let’s play!</p>
 
-    <div
-      class="instructions__video"
-      [ngClass]="{ 'instructions__video--initialized': controlsInitialized }"
-    >
-      <video
-        snakeCameraFeed
-        snakeHandDetector
-        width="320"
-        height="240"
-        (directionChange)="directionChange($event)"
-      ></video>
+    <div class="instructions__setup">
+      <div
+        class="instructions__video"
+        [ngClass]="{ 'instructions__video--initialized': controlsInitialized }"
+      >
+        <video
+          snakeCameraFeed
+          snakeHandDetector
+          width="320"
+          height="240"
+          (directionChange)="directionChange($event)"
+        ></video>
+      </div>
+
+      <button
+        [disabled]="!controlsInitialized"
+        class="instructions__play"
+        type="button"
+        (click)="play()"
+      >
+        Play
+      </button>
     </div>
-
-    <button
-      [disabled]="!controlsInitialized"
-      class="instructions__play"
-      type="button"
-      (click)="play()"
-    >
-      Play
-    </button>
   </ng-container>
-
   <div id="accordionGroup" class="instructions__accordion">
     <h3>
       <button
