@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { CameraFeedDirective } from '../../controller/webcam/camera-feed.directive';
 import { Direction } from '../game.model';
@@ -14,6 +22,11 @@ import { HandDetectorDirective } from '../../controller/webcam/hand-detector.dir
 export class InstructionsComponent {
   private controlsInitializedInternal = false;
   private creditsExpandedInternal = false;
+
+  @ViewChild('scrollContainer', { static: true })
+  private scrollContainer?: ElementRef;
+
+  public scrollHeight = signal(0);
 
   @Output() closeInstructions = new EventEmitter<void>();
 
@@ -44,5 +57,16 @@ export class InstructionsComponent {
 
   public toggleCredits(): void {
     this.creditsExpandedInternal = !this.creditsExpandedInternal;
+    setTimeout(() => {
+      this.scrollHeight.set(
+        this.scrollContainer?.nativeElement.scrollHeight ?? 0,
+      );
+    }, 0);
+  }
+
+  public creditsSectionShown(): void {
+    this.scrollHeight.set(
+      this.scrollContainer?.nativeElement.scrollHeight ?? 0,
+    );
   }
 }

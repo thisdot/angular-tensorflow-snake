@@ -1,4 +1,4 @@
-<div class="instructions" #instructions [scrollTop]="instructions.scrollHeight">
+<div class="instructions" #scrollContainer [scrollTop]="scrollHeight()">
   <h1>Welcome to Snake using Angular and Tensorflow!</h1>
   <p>
     This game demonstrates the power of combining Angular and Tensorflow to
@@ -64,6 +64,7 @@
       aria-labelledby="creditsButton"
       class="instructions__accordion__panel"
       [hidden]="!creditsExpanded"
+      (shown)="creditsSectionShown()"
     >
       <p>
         This game application was created by

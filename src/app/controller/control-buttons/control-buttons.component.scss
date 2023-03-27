@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'functions';
 @import 'mixins';
+@import 'breakpoints';
 
 $color-dark: #454344;
 $color-darker: #231c1b;
@@ -37,4 +38,16 @@ $color-darker: #231c1b;
 
 button {
   @include physicalButton;
+}
+
+@include media($phone) {
+  :host {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+  }
+  button {
+    display: block;
+    margin: 5px 0;
+  }
 }

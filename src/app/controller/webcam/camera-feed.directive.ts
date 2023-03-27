@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
+  HostBinding,
   Inject,
   NgZone,
   OnDestroy,
@@ -18,6 +19,15 @@ export class CameraFeedDirective implements OnDestroy {
   @Output()
   public cameraFeedCreated = new EventEmitter<void>();
 
+  @HostBinding('attr.autoplay')
+  autoplay = true;
+
+  @HostBinding('attr.muted')
+  muted = true;
+
+  @HostBinding('attr.playsinline')
+  playsinline = true;
+
   constructor(
     private elementRef: ElementRef<HTMLVideoElement>,
     @Inject(NAVIGATOR) private navigator: Navigator,
@@ -31,7 +41,12 @@ export class CameraFeedDirective implements OnDestroy {
 
     this.zone.runOutsideAngular(() => {
       this.navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false })
+        .getUserMedia({
+          video: {
+            facingMode: 'user',
+          },
+          audio: false,
+        })
         .then((localMediaStream) => {
           const nativeElement = this.elementRef.nativeElement;
           nativeElement.srcObject = localMediaStream;
