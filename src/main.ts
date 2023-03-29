@@ -19,9 +19,10 @@ bootstrapApplication(AppComponent, {
         path: 'signals',
         component: LayoutComponent,
         providers: [
+          SignalsGameService,
           {
             provide: GameServiceBase,
-            useClass: SignalsGameService,
+            useExisting: SignalsGameService,
           },
         ],
         children: [
@@ -35,9 +36,10 @@ bootstrapApplication(AppComponent, {
         path: 'rxjs',
         component: LayoutComponent,
         providers: [
+          RxjsGameService,
           {
             provide: GameServiceBase,
-            useClass: RxjsGameService,
+            useExisting: RxjsGameService,
           },
         ],
         children: [

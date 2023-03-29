@@ -5,7 +5,6 @@ import { GameStatus, GridSize } from '../game.model';
 import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
-import { GameServiceBase } from '../game.service.base';
 import { computeTiles } from './game-board.utils';
 
 @Component({
@@ -16,10 +15,6 @@ import { computeTiles } from './game-board.utils';
   styleUrls: ['./game-board.component.scss'],
 })
 export class RxjsGameBoardComponent {
-  private get gameService(): RxjsGameService {
-    return this.injectedGameService as RxjsGameService;
-  }
-
   public tiles$: Observable<Tile[]> = this.gameService.state$
     .pipe(withLatestFrom(this.gameService.gridSize$))
     .pipe(
@@ -32,5 +27,5 @@ export class RxjsGameBoardComponent {
     map((state) => state.status === GameStatus.GameOver),
   );
 
-  public constructor(private injectedGameService: GameServiceBase) {}
+  public constructor(private gameService: RxjsGameService) {}
 }
