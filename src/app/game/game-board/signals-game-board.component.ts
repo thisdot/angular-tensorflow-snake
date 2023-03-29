@@ -5,7 +5,7 @@ import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
 import { GameServiceBase } from '../game.service.base';
 import { SignalsGameService } from '../signals-game.service';
-import { GameBoardUtils } from './game-board.utils';
+import { computeTiles } from './game-board.utils';
 
 @Component({
   selector: 'snake-signals-game-board',
@@ -22,7 +22,7 @@ export class SignalsGameBoardComponent {
   public tiles: Signal<Tile[]> = computed(() => {
     const { snake, food } = this.gameService.state();
     const { width, height } = this.gameService.gridSize();
-    return GameBoardUtils.computeTiles(width, height, snake, food);
+    return computeTiles(width, height, snake, food);
   });
 
   public gridSize: Signal<GridSize> = this.gameService.gridSize;

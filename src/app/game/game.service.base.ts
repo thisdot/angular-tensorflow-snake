@@ -9,10 +9,9 @@ import {
   GameStatus,
   GameConfig,
 } from './game.model';
-import { GameService } from './game.service.model';
 import { GameUtils } from './game.utils';
 
-export abstract class GameServiceBase implements GameService {
+export abstract class GameServiceBase {
   protected snake: Snake = new Snake([{ x: 0, y: 0 }], DEFAULT_DIRECTION);
   protected food: Coordinates = { x: 1, y: 0 };
   protected speed = DEFAULT_SPEED;
@@ -26,21 +25,13 @@ export abstract class GameServiceBase implements GameService {
     return this.status === GameStatus.Running;
   }
 
-  public setup(config?: GameConfig): void {
-    throw new Error(`Method not implemented. Provided config: ${config}`);
-  }
+  public abstract setup(config?: GameConfig): void;
 
-  public start(): void {
-    throw new Error('Method not implemented.');
-  }
+  public abstract start(): void;
 
-  public setDirection(direction: Direction): void {
-    throw new Error(`Method not implemented. Provided direction: ${direction}`);
-  }
+  public abstract setDirection(direction: Direction): void;
 
-  public pause(): void {
-    throw new Error('Method not implemented.');
-  }
+  public abstract pause(): void;
 
   protected randomCoordinates(avoidEdges?: boolean): Coordinates {
     let xMin = 0;

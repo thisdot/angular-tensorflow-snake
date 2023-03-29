@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RxjsGameService } from '../rxjs-game.service';
-import { Coordinates, GameStatus, GridSize, Snake } from '../game.model';
-import { GameUtils } from '../game.utils';
+import { GameStatus, GridSize } from '../game.model';
 import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
 import { GameServiceBase } from '../game.service.base';
-import { GameBoardUtils } from './game-board.utils';
+import { computeTiles } from './game-board.utils';
 
 @Component({
   selector: 'snake-rxjs-game-board',
@@ -25,7 +24,7 @@ export class RxjsGameBoardComponent {
     .pipe(withLatestFrom(this.gameService.gridSize$))
     .pipe(
       map(([{ snake, food }, { width, height }]) =>
-        GameBoardUtils.computeTiles(width, height, snake, food),
+        computeTiles(width, height, snake, food),
       ),
     );
   public gridSize$: Observable<GridSize> = this.gameService.gridSize$;
@@ -34,18 +33,4 @@ export class RxjsGameBoardComponent {
   );
 
   public constructor(private injectedGameService: GameServiceBase) {}
-
-  private hasSnakeBody(tile: Coordinates, snake?: Snake | null) {
-    return (
-      !!snake &&
-      snake.body.some((segment) => GameUtils.arePointsEqual(segment, tile))
-    );
-  }
-
-  private getPointFromIndex(index: number, width: number): Coordinates {
-    return {
-      x: index % width,
-      y: Math.floor(index / width),
-    };
-  }
 }

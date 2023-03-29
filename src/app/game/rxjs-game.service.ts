@@ -12,11 +12,10 @@ import {
   Snake,
 } from './game.model';
 import { GameServiceBase } from './game.service.base';
-import { GameService } from './game.service.model';
 import { GameUtils } from './game.utils';
 
 @Injectable()
-export class RxjsGameService extends GameServiceBase implements GameService {
+export class RxjsGameService extends GameServiceBase {
   private stateSource = new BehaviorSubject<GameState>({
     snake: this.snake,
     food: this.food,
@@ -32,7 +31,7 @@ export class RxjsGameService extends GameServiceBase implements GameService {
     super();
   }
 
-  public override setup(config?: GameConfig): void {
+  public setup(config?: GameConfig): void {
     this.gridSizeInternal = config?.gridSize
       ? config.gridSize
       : DEFAULT_GRID_SIZE;
@@ -72,12 +71,12 @@ export class RxjsGameService extends GameServiceBase implements GameService {
     });
   }
 
-  public override start(): void {
+  public start(): void {
     this.status = GameStatus.Running;
     this.tick(0);
   }
 
-  public override setDirection(direction: Direction): void {
+  public setDirection(direction: Direction): void {
     if (this.snake.tail) {
       if (GameUtils.areDirectionsOpposite(direction, this.snake.direction)) {
         return;
@@ -86,7 +85,7 @@ export class RxjsGameService extends GameServiceBase implements GameService {
     this.direction = direction;
   }
 
-  public override pause(): void {
+  public pause(): void {
     this.status = GameStatus.Paused;
     this.stateSource.next({
       snake: this.snake,
