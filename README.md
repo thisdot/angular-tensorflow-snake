@@ -1,27 +1,112 @@
 # Angular Tensorflow Snake
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
+[![Snake Header][cover]][game_link]
 
-## Development server
+An old school snake game with a twist - your hand is the controller!
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The app aims to demonstrate the power of combining [Angular][angular_link] and
+[Tensorflow][tensorflow_link] to build highly interactive and reactive
+applications.
 
-## Code scaffolding
+Built for [Google I/O 2023][google_io_link] with Angular 16.0.0-next.5 and
+running in two versions:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- One using RxJS.
+- And another using the new and awesome Angular signals.
 
-## Build
+Want to play right away? [Try the live app now][game_link] deployed from the
+`main` branch to [Firebase][firebase_link].
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+_Built by [This Dot][this_dot_link] in partnership with Google_
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+First, run
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```sh
+npm install
+```
 
-## Further help
+to install all the dependencies.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To run the game locally on a development server, you can run the following
+command:
+
+```sh
+npm start
+```
+
+To build the app, run the following command:
+
+```sh
+npm run build
+```
+
+## Linting and Formatting
+
+To check for any linting issues, you can run the following command:
+
+```sh
+npm run lint
+```
+
+To fix automatically fixable linting issues, run:
+
+```sh
+npm run lint-fix
+```
+
+To check for any formatting issues, you can run the following command:
+
+```sh
+npm run format-check
+```
+
+To format all files to conform to the project's Prettier configuration, you can
+run:
+
+```sh
+npm run format
+```
+
+## Running Tests
+
+To run all unit tests use the following command:
+
+```sh
+npm run test-once
+```
+
+To run unit tests in watch mode, run:
+
+```sh
+npm run test
+```
+
+To generate a coverage report, you can run
+
+```sh
+npm run test-coverage
+```
+
+To view the generated coverage report you can open
+[coverage/index.html](coverage/index.html) in a browser of your choice.
+
+## Contributing
+
+Pull Requests (PR) with bug fixes or features are welcome! Please see the
+[contributing guidelines](./CONTRIBUTING.md) before submitting a PR.
+
+If you have an idea for a new feature or a question regarding the app, please
+open an issue first so it can be discussed and vetted before contributing.
+
+[firebase_link]: https://firebase.google.com/
+[game_link]: https://angular-tensorflow-snake.web.app/
+[google_io_link]: https://io.google/
+[angular_link]: https://angular.io/
+[this_dot_link]: https://www.thisdot.co/
+[tensorflow_link]: https://www.tensorflow.org/
+[license_link]: https://opensource.org/licenses/MIT
+[cover]: art/cover.svg
