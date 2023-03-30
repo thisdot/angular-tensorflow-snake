@@ -68,9 +68,20 @@ be updated as the team decides on new standards.
   run the code to aid their review if they want).
 - **Unit Tests** – There is no testing coverage threshold defined and you are
   not required to unit tests components. However, make sure existing tests are
-  passing before creating a pull request by running `npm run test-once` and
+  passing before creating a pull request by running `npm run test:once` and
   consider adding or updating tests when you add or modify an Angular service.
   You may be asked by the reviewer to add unit tests.
+- **Documentation** – The application uses [Compodoc](https://compodoc.app/) to
+  generate documentation and [tplant](https://github.com/bafolts/tplant) to
+  generate class diagrams. To generate and serve the documentation, you can run
+  `npm run compodoc:build-and-serve`. If you changed the application structure,
+  please make sure to run `npm run uml:overview` in order to regenerate an
+  actual version of the UML diagram and update the
+  [Architecture Overview](README.md#2-architecture-overview) section fo the
+  README if necessary. If you changed something in the `GameServiceBase`,
+  `RxjsGameService` or `SignalsGameService`, please run also
+  `npm run uml:game-service` to make sure its class diagram is up to date before
+  creating a PR.
 - **Minimal Pull Requests** – Do not commit changes to files where there was not
   a new feature added or an existing feature altered. Files altered only to
   change formatting should not be included in pull requests. Code authors are
