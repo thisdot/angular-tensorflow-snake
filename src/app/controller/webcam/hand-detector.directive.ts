@@ -44,8 +44,6 @@ export class HandDetectorDirective implements OnDestroy {
 
   public ngOnDestroy(): void {
     tf.dispose();
-    this.detector?.reset();
-    this.detector?.dispose();
     this.detector = undefined;
   }
 

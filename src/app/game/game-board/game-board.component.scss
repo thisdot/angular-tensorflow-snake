@@ -96,100 +96,6 @@ $monitor-shade-color: #b4b8be;
       $pink
     )
     1;
-
-  &__tile {
-    padding-bottom: 100%;
-    position: relative;
-    border-top: 1px solid $dark--contrast;
-    border-left: 1px solid $dark--contrast;
-    box-sizing: border-box;
-
-    &--snake,
-    &--snake-tail,
-    &--snake-head {
-      padding: 0;
-      position: relative;
-
-      &::after {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        content: '';
-        border: 1px solid darken($blue, 20%);
-        background-color: $blue;
-        box-shadow: inset darken($blue, 10%) 0 0 0 2px;
-        border-image: conic-gradient(
-            from var(--angle),
-            $blue,
-            darken($blue, 10%),
-            darken($blue, 20%)
-          )
-          1;
-        animation: 1s rotate linear infinite;
-      }
-    }
-
-    &--snake-head {
-      .eyes {
-        transform: rotate(var(--rotation));
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: 2;
-        &::before,
-        &::after {
-          content: '';
-          position: absolute;
-          display: block;
-          height: 4px;
-          width: 4px;
-          background: linear-gradient(
-            to top,
-            darken($blue, 15%),
-            darken($blue, 20%),
-          );
-          top: 20%;
-          left: 20%;
-          animation: blinkEyes 0.6s ease-in-out infinite alternate;
-          transform: scaleY(1);
-          transform-origin: center;
-          border-radius: 50%;
-          box-shadow: $blue--70 0 0 2px;
-        }
-
-        &::before {
-          left: auto;
-          right: 20%;
-        }
-      }
-    }
-
-    &--food {
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &::after {
-        content: '';
-        position: absolute;
-        display: block;
-        top: 26%;
-        left: 26%;
-        right: 26%;
-        bottom: 26%;
-        background-color: $yellow;
-        border-radius: 50%;
-        animation: blinkLight 1s ease-in-out infinite;
-        box-shadow: $yellow 0 0 2px;
-      }
-    }
-  }
 }
 
 .light {
@@ -215,21 +121,6 @@ $monitor-shade-color: #b4b8be;
   }
   to {
     background-color: $yellow;
-  }
-}
-
-@keyframes rotate {
-  to {
-    --angle: 360deg;
-  }
-}
-
-@keyframes blinkEyes {
-  0% {
-    transform: scaleY(1);
-  }
-  100% {
-    transform: scaleY(0.2);
   }
 }
 

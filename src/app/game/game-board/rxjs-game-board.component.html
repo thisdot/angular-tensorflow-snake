@@ -6,19 +6,10 @@
       [style.--grid-height]="(gridSize$ | async)?.height"
       *ngIf="(gameOver$ | async) !== true"
     >
-      <div
-        class="game-board__tile"
+      <snake-game-tile
         *ngFor="let tile of tiles$ | async"
-        [ngClass]="{
-          'game-board__tile--snake': tile.hasSnakeBody,
-          'game-board__tile--snake-head': tile.hasSnakeHead,
-          'game-board__tile--snake-tail': tile.hasSnakeTail,
-          'game-board__tile--food': tile.hasFood
-        }"
-        [style.--rotation]="tile.rotation"
-      >
-        <div *ngIf="tile.hasSnakeHead" class="eyes"></div>
-      </div>
+        [tile]="tile"
+      ></snake-game-tile>
     </div>
     <div class="game-over" *ngIf="gameOver$ | async">
       Game over, you crashed!

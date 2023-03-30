@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
   Coordinates,
-  DEFAULT_DIRECTION,
   DEFAULT_GRID_SIZE,
   DEFAULT_SPEED,
   Direction,
@@ -12,37 +11,31 @@ import {
   GridSize,
   Snake,
 } from './game.model';
+import { GameServiceBase } from './game.service.base';
 import { GameUtils } from './game.utils';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GameService {
-  private snake: Snake = new Snake([{ x: 0, y: 0 }], DEFAULT_DIRECTION);
-  private food: Coordinates = { x: 1, y: 0 };
-  private gridSize: GridSize = DEFAULT_GRID_SIZE;
-  private speed = DEFAULT_SPEED;
-  private direction: Direction = DEFAULT_DIRECTION;
-  private status = GameStatus.Initial;
-
-  private lastTick = 0;
-
+@Injectable()
+export class RxjsGameService extends GameServiceBase {
   private stateSource = new BehaviorSubject<GameState>({
     snake: this.snake,
     food: this.food,
     status: this.status,
   });
 
-  private gridSizeSource = new BehaviorSubject<GridSize>(this.gridSize);
+  private gridSizeSource = new BehaviorSubject<GridSize>(this.gridSizeInternal);
 
   public state$ = this.stateSource.asObservable();
   public gridSize$ = this.gridSizeSource.asObservable();
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone) {
+    super();
+  }
 
   public setup(config?: GameConfig): void {
-    this.gridSize = config?.gridSize ? config.gridSize : DEFAULT_GRID_SIZE;
-    this.gridSizeSource.next(this.gridSize);
+    this.gridSizeInternal = config?.gridSize
+      ? config.gridSize
+      : DEFAULT_GRID_SIZE;
+    this.gridSizeSource.next(this.gridSizeInternal);
 
     this.snake = config?.snake
       ? config.snake
@@ -160,54 +153,6 @@ export class GameService {
           status: this.status,
         });
       });
-    });
-  }
-
-  private randomCoordinates(avoidEdges?: boolean): Coordinates {
-    let xMin = 0;
-    let yMin = 0;
-    let xMax = this.gridSize?.width - 1 ?? 9;
-    let yMax = this.gridSize.height - 1 ?? 9;
-
-    if (avoidEdges) {
-      xMin++;
-      yMin++;
-      xMax--;
-      yMax--;
-    }
-    const x = Math.floor(Math.random() * (xMax - xMin + 1)) + xMin;
-    const y = Math.floor(Math.random() * (yMax - yMin + 1)) + yMin;
-    return {
-      x,
-      y,
-    };
-  }
-
-  private randomFoodCoordinates(): Coordinates {
-    const randomCoordinates = this.randomCoordinates(true);
-    return this.snake.segments.some((segment) =>
-      GameUtils.arePointsEqual(randomCoordinates, segment),
-    )
-      ? this.randomFoodCoordinates()
-      : randomCoordinates;
-  }
-
-  private isOutsideOfBounds(points: Coordinates[]): boolean {
-    return points.some((point) => this.isPointOutsideOfBounds(point));
-  }
-
-  private isPointOutsideOfBounds(point: Coordinates): boolean {
-    return (
-      point.x < 0 ||
-      point.x >= (this.gridSize?.width ?? 0) ||
-      point.y < 0 ||
-      point.y >= (this.gridSize?.height ?? 0)
-    );
-  }
-
-  private isPointOnSnake(position: Coordinates): boolean {
-    return this.snake.segments.some((segment) => {
-      return GameUtils.arePointsEqual(segment, position);
     });
   }
 }

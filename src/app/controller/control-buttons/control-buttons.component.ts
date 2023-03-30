@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameService } from '../../game/game.service';
-import { map } from 'rxjs/operators';
-import { GameStatus } from '../../game/game.model';
+import { GameServiceBase } from '../../game/game.service.base';
 
 @Component({
   selector: 'snake-control-buttons',
@@ -12,14 +10,14 @@ import { GameStatus } from '../../game/game.model';
   styleUrls: ['./control-buttons.component.scss'],
 })
 export class ControlButtonsComponent {
-  public gameRunning$ = this.gameService.state$.pipe(
-    map(({ status }) => status === GameStatus.Running),
-  );
+  public get gameRunning(): boolean {
+    return this.gameService.running;
+  }
 
   @Input()
   public initialized = false;
 
-  public constructor(private gameService: GameService) {}
+  public constructor(private gameService: GameServiceBase) {}
 
   public startGame(): void {
     this.gameService.start();

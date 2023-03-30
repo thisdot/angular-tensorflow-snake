@@ -1,0 +1,30 @@
+@import 'variables';
+
+:host {
+  display: block;
+  padding-left: 40px;
+
+  .top {
+    background-color: $red--200;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .middle {
+    background-color: $red--200;
+    height: 6px;
+    width: 20px;
+    margin: 0 auto;
+    position: relative;
+    left: -7px;
+  }
+  .bottom {
+    background-color: $red--200;
+    width: 6px;
+    height: 40px;
+    margin: 0 auto;
+    position: relative;
+    left: -14px;
+  }
+}

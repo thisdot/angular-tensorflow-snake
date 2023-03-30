@@ -2,14 +2,16 @@ import { TestBed } from '@angular/core/testing';
 import { skip, take } from 'rxjs';
 import { Snake, DEFAULT_DIRECTION, GameStatus, Direction } from './game.model';
 
-import { GameService } from './game.service';
+import { RxjsGameService } from './rxjs-game.service';
 
-describe('GameService', () => {
-  let service: GameService;
+describe('RxjsGameService', () => {
+  let service: RxjsGameService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(GameService);
+    TestBed.configureTestingModule({
+      providers: [RxjsGameService],
+    });
+    service = TestBed.inject(RxjsGameService);
   });
 
   it('should be created', () => {
