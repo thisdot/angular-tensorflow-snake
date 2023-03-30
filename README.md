@@ -17,7 +17,7 @@ running in two versions:
 Want to play right away? [Try the live app now][game_link] deployed from the
 `main` branch to [Firebase][firebase_link].
 
-_Built by [This Dot][this_dot_link] in partnership with Google_
+_Built by [This Dot][this_dot_link] in partnership with the Angular Team at Google_
 
 ---
 
