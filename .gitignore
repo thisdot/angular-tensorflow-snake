@@ -43,3 +43,6 @@ Thumbs.db
 
 # Firebase
 .firebase/
+
+# Compodoc
+/docs
