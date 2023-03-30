@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'breakpoints';
 
 :host {
   display: flex;
@@ -10,6 +11,7 @@
     content: '';
     position: absolute;
     background-size: contain;
+    max-height: 60vh;
   }
 
   &::after {
@@ -17,7 +19,7 @@
     height: 25vw;
     background: url('/assets/images/bookshelf.svg') right top no-repeat;
     right: 1vw;
-    top: 10vw;
+    bottom: 35vh;
     filter: drop-shadow(-10px 0px 20px rgba(0, 0, 0, 0.5));
   }
 
@@ -26,7 +28,8 @@
     height: 18vw;
     background: url('/assets/images/bookshelf2.svg') left top no-repeat;
     left: 2vw;
-    top: 6vw;
+    bottom: 50vh;
+    max-height: 50vh;
     filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
   }
 }
@@ -35,4 +38,13 @@
   display: block;
   min-width: 50%;
   flex: 1;
+}
+
+@include media($tablet) {
+  :host {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
 }

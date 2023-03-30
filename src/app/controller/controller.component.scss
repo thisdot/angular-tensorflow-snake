@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'functions';
 @import 'mixins';
+@import 'breakpoints';
 
 :host {
   margin: 0 auto;
@@ -11,10 +12,11 @@
   padding: 20px;
   position: relative;
   width: 55vw;
-  height: 30vh;
-  min-height: 260px;
+  height: 35vh;
+  min-height: 320px;
   margin-top: -18px;
-  max-width: 1200px;
+  max-width: 1160px;
+  box-sizing: border-box;
 
   &::before {
     content: '';
@@ -106,5 +108,42 @@
     bottom: 6%;
     left: -20px;
     right: -20px;
+  }
+}
+
+@include media($tablet) {
+  :host {
+    width: 90vw;
+  }
+  .middle {
+    width: 30vw;
+    &__top {
+      font-size: 1em;
+    }
+  }
+}
+
+@include media($phone) {
+  :host {
+    width: 100%;
+  }
+  .middle {
+    width: 85px;
+    &__top {
+      font-size: 0.7em;
+    }
+    &__instructions {
+      margin-top: -60%;
+      button {
+        font-size: 0.7em;
+        padding: 0 5%;
+      }
+    }
+    &__bottom {
+      height: 42%;
+    }
+    &__buttons {
+      bottom: 10%;
+    }
   }
 }

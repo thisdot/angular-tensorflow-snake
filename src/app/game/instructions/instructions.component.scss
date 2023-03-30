@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'mixins';
+@import 'breakpoints';
 
 $border-width: 1.5vw;
 $border-width--inset: 0.8vw;
@@ -97,6 +98,7 @@ $border-width--inset: 0.8vw;
     );
 
     margin: 1em 0;
+    max-width: 100%;
 
     &[disabled] {
       filter: grayscale(100%);
@@ -189,4 +191,31 @@ h2 {
 
 p {
   margin: 2em 0;
+}
+
+a {
+  color: $blue;
+  transition: text-shadow 0.2s ease-out, border-width 0.2s ease-out;
+  text-decoration: none;
+  border-bottom: 1px solid $blue;
+
+  &:hover {
+    text-shadow: 0 0px 1px darken($blue, 20%);
+    border-bottom-width: 2px;
+  }
+
+  &:visited {
+    color: $purple;
+    border-color: $purple;
+
+    &:hover {
+      text-shadow: 0px 0px 1px darken($purple, 20%);
+    }
+  }
+}
+
+@include media($phone) {
+  :host {
+    font-size: 0.5em;
+  }
 }

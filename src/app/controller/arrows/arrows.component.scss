@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'functions';
 @import 'mixins';
+@import 'breakpoints';
 
 @mixin arrowBoxShadow($direction) {
   @if $direction == up {
@@ -23,58 +24,67 @@
 $border-raised: 0.4vw solid $red--250;
 $border-raised--l: 0.6vw solid $red--250;
 
+:host {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
 .arrow-buttons {
   position: absolute;
-  z-index: 2;
-  width: 12vw;
-  height: 12vw;
   top: 50%;
   left: 6%;
-  margin-top: -6.5vw;
+  z-index: 2;
+  max-height: 80%;
+  max-width: 25%;
+  aspect-ratio: 1/1;
+  transform: translateY(-50%);
   position: relative;
   &__button {
-    width: 4vw;
-    height: 4vw;
+    width: 33.333%;
+    height: 33.333%;
     background: $red--150;
     position: absolute;
     box-sizing: border-box;
-    transition: box-shadow 0.5s ease-out, border 0.5s ease-out,
-      background 0.5s ease-out;
+    transition: box-shadow 0.5s ease-out, border 0.5s ease-out;
     box-sizing: border-box;
     border: 0px solid transparent;
     background-size: 30%;
     &--top {
       @include triangle(up);
-      top: 0;
-      left: 4vw;
+      top: 1px;
+      left: 33.333%;
       border-top-right-radius: 15%;
       border-top-left-radius: 15%;
     }
     &--bottom {
       @include triangle(down);
       bottom: 1px;
-      left: 4vw;
+      left: 33.333%;
       border-bottom-left-radius: 15%;
       border-bottom-right-radius: 15%;
     }
     &--left {
       @include triangle(left);
-      top: 4vw;
+      top: 33.333%;
       left: 0;
       border-bottom-left-radius: 15%;
       border-top-left-radius: 15%;
     }
     &--right {
       @include triangle(right);
-      top: 4vw;
+      top: 33.333%;
       right: 1px;
       border-bottom-right-radius: 15%;
       border-top-right-radius: 15%;
     }
 
     &--center {
-      top: 4vw;
-      left: 4vw;
+      top: 33.333%;
+      left: 33.333%;
     }
   }
 }
@@ -170,6 +180,67 @@ $border-raised--l: 0.6vw solid $red--250;
         border-right: $border-raised;
         border-bottom: 1px solid $red--250;
         @include arrowBoxShadow(right);
+      }
+    }
+  }
+}
+
+@include media($phone) {
+  $border-raised: 0.8vw solid $red--250;
+  $border-raised--l: 1.2vw solid $red--250;
+  :host {
+    &.direction--down {
+      .arrow-buttons__button {
+        &--top {
+          border-top: $border-raised;
+        }
+        &--left {
+          border-top: $border-raised;
+        }
+        &--right {
+          border-top: $border-raised;
+        }
+      }
+    }
+    &.direction--up {
+      .arrow-buttons__button {
+        &--bottom {
+          border-bottom: $border-raised--l;
+        }
+        &--left {
+          border-bottom: $border-raised;
+        }
+        &--right {
+          border-bottom: $border-raised;
+        }
+      }
+    }
+    &.direction--right {
+      .arrow-buttons__button {
+        &--bottom {
+          border-left: $border-raised;
+        }
+        &--top {
+          border-top: $border-raised;
+          border-left: $border-raised;
+        }
+        &--left {
+          border-left: $border-raised;
+        }
+      }
+    }
+    &.direction--left {
+      .arrow-buttons__button {
+        &--bottom {
+          border-right: $border-raised;
+        }
+        &--top {
+          border-top: $border-raised;
+          border-right: $border-raised;
+        }
+        &--right {
+          border-right: $border-raised;
+        }
       }
     }
   }
