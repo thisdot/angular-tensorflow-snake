@@ -1,11 +1,11 @@
-# Angular Tensorflow Snake
+# Angular TensorFlow.js Snake
 
 [![Snake Header][cover]][game_link]
 
 An old school snake game with a twist - your hand is the controller!
 
 The app aims to demonstrate the power of combining [Angular][angular_link] and
-[Tensorflow][tensorflow_link] to build highly interactive and reactive
+[TensorFlow.js][tensorflow_link] to build highly interactive and reactive
 applications.
 
 Built for [Google I/O 2023][google_io_link] with Angular 16.0.0-next.5 and
@@ -195,7 +195,7 @@ meant to be added to a `<video>` tag:
 
 - The `CameraFeedDirective` which uses the `NavigatorService` to capture user's
   camera and output the feed into the `<video>` tag.
-- The `HandDetectorDirective` which imports Tensorflow WebGl backend and the
+- The `HandDetectorDirective` which imports TensorFlow.js WebGl backend and the
   pre-trained [hand pose detection model](), which is then used to estimate a
   direction where the user's hand is pointing and sends it upwards using the
   `directionChange` EventEmitter. The `WebcamComponent` then reacts to this
