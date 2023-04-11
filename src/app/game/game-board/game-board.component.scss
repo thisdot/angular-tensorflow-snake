@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'functions';
+@import 'breakpoints';
 
 $screen-color: #1e1134;
 $monitor-shade-color: #b4b8be;
@@ -132,11 +133,62 @@ $monitor-shade-color: #b4b8be;
 }
 
 .game-over {
-  font-size: 2rem;
-  line-height: 3.5rem;
+  font-size: 1.5rem;
+  line-height: 3rem;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
   color: white;
   text-shadow: 0 0 10px $blue, 0 0 20px $blue, 0 0 30px $blue, 0 0 40px $blue,
     0 0 55px $blue, 0 0 75px $blue;
+
+  &__share {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6em;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    text-shadow: 0 0 10px $blue, 0 0 20px $blue, 0 0 30px $blue, 0 0 40px $blue,
+      0 0 55px $blue, 0 0 75px $blue;
+    background: transparent;
+    border: 3px dotted $blue;
+    border-radius: 5px;
+    padding: 0.75em 1.2em;
+    margin: 2em 0 0 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.3s ease-in-out;
+
+    img {
+      width: 2.5em;
+      height: 2.5em;
+      margin-right: 1em;
+      transform: rotate(0deg);
+      transition: transform 0.3s ease-out;
+    }
+
+    &:hover {
+      border-color: white;
+      img {
+        transform: rotate(8deg);
+      }
+    }
+  }
+
+  &__score {
+    color: $yellow;
+    font-size: 2em;
+    margin-top: 0.5em;
+  }
+}
+
+@include media($phone) {
+  .game-over {
+    font-size: 1rem;
+    line-height: 2rem;
+
+    &__share {
+      margin-top: 1em;
+    }
+  }
 }

@@ -5,7 +5,7 @@ import { GameStatus, GridSize } from '../game.model';
 import { map, Observable, withLatestFrom } from 'rxjs';
 import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
-import { computeTiles } from './game-board.utils';
+import { computeTiles, constructTwitterShareUrl } from './game-board.utils';
 
 @Component({
   selector: 'snake-rxjs-game-board',
@@ -26,6 +26,16 @@ export class RxjsGameBoardComponent {
   public gameOver$: Observable<boolean> = this.gameService.state$.pipe(
     map((state) => state.status === GameStatus.GameOver),
   );
+  public score$: Observable<number> = this.gameService.state$.pipe(
+    map((state) => state.snake.segments.length - 1),
+  );
 
   public constructor(private gameService: RxjsGameService) {}
+
+  public twitterShareUrl(score: number | null): string {
+    if (score === null) {
+      score = 0;
+    }
+    return constructTwitterShareUrl(score);
+  }
 }

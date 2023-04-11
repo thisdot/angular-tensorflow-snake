@@ -12,7 +12,16 @@
       ></snake-game-tile>
     </div>
     <div class="game-over" *ngIf="gameOver$ | async">
-      Game over, you crashed!
+      <p>Game over! Score:</p>
+      <p class="game-over__score">{{ score$ | async }}</p>
+      <a
+        class="game-over__share"
+        [href]="twitterShareUrl(score$ | async)"
+        target="_blank"
+      >
+        <img src="/assets/images/twitter.svg" alt="Share on Twitter" />
+        Share my result
+      </a>
     </div>
   </div>
   <div class="light"></div>

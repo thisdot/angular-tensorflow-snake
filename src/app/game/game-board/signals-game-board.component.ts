@@ -4,7 +4,7 @@ import { GameStatus, GridSize } from '../game.model';
 import { Tile } from './game-board.model';
 import { GameTileComponent } from './game-tile.component';
 import { SignalsGameService } from '../signals-game.service';
-import { computeTiles } from './game-board.utils';
+import { computeTiles, constructTwitterShareUrl } from './game-board.utils';
 
 @Component({
   selector: 'snake-signals-game-board',
@@ -26,5 +26,13 @@ export class SignalsGameBoardComponent {
     () => this.gameService.state().status === GameStatus.GameOver,
   );
 
+  public score = computed(
+    () => this.gameService.state().snake.segments.length - 1,
+  );
+
   public constructor(private gameService: SignalsGameService) {}
+
+  public twitterShareUrl(): string {
+    return constructTwitterShareUrl(this.score());
+  }
 }

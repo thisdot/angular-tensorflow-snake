@@ -11,7 +11,14 @@
         [tile]="tile"
       ></snake-game-tile>
     </div>
-    <div class="game-over" *ngIf="gameOver()">Game over, you crashed!</div>
+    <div class="game-over" *ngIf="gameOver()">
+      <p>Game over! Score:</p>
+      <p class="game-over__score">{{ score() }}</p>
+      <a class="game-over__share" [href]="twitterShareUrl()" target="_blank">
+        <img src="/assets/images/twitter.svg" alt="Share on Twitter" />
+        Share my result
+      </a>
+    </div>
   </div>
   <div class="light"></div>
 </div>
