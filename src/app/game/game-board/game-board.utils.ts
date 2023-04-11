@@ -43,3 +43,8 @@ export function computeTiles(
     };
   });
 }
+
+export function constructTwitterShareUrl(score: number): string {
+  const text = `I scored ${score} on the Angular + TensorFlow.js demo snake game! Try it out https://goo.gle/angular-tf-snake #io23`;
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+}
