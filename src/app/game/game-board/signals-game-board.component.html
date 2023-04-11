@@ -14,7 +14,7 @@
     <div class="game-over" *ngIf="gameOver()">
       <p>
         Game over, you crashed with a score of
-        <strong class="score">{{ score() }}</strong
+        <strong class="game-over__score">{{ score() }}</strong
         >!
       </p>
       <a class="game-over__share" [href]="twitterShareUrl()" target="_blank">
