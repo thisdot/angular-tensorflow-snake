@@ -1,4 +1,4 @@
-# Contributing to Angular Tensorflow Snake
+# Contributing to Angular TensorFlow.js Snake
 
 Please [read our Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 repository, you are agreeing to its rules.

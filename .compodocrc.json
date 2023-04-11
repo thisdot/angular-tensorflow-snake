@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
-  "name": "Angular Tensorflow Snake",
+  "name": "Angular TensorFlow.js Snake",
   "output": "./docs/",
   "assetsFolder": "./documentation_assets"
 }
