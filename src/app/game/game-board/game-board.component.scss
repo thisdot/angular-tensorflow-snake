@@ -142,7 +142,8 @@ $monitor-shade-color: #b4b8be;
     0 0 55px $blue, 0 0 75px $blue;
 
   &__share {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     font-size: 0.6em;
     text-align: center;
     font-family: 'Press Start 2P', cursive;
@@ -159,9 +160,9 @@ $monitor-shade-color: #b4b8be;
     transition: border-color 0.3s ease-in-out;
 
     img {
-      width: 1em;
-      height: 1em;
-      margin-right: 0.25em;
+      width: 3em;
+      height: 3em;
+      margin-right: 1em;
       transform: rotate(0deg);
       transition: transform 0.3s ease-out;
     }
