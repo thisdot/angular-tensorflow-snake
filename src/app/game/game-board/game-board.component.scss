@@ -160,8 +160,8 @@ $monitor-shade-color: #b4b8be;
     transition: border-color 0.3s ease-in-out;
 
     img {
-      width: 3em;
-      height: 3em;
+      width: 2.5em;
+      height: 2.5em;
       margin-right: 1em;
       transform: rotate(0deg);
       transition: transform 0.3s ease-out;
@@ -177,6 +177,8 @@ $monitor-shade-color: #b4b8be;
 
   &__score {
     color: $yellow;
+    font-size: 2em;
+    margin-top: 0.5em;
   }
 }
 

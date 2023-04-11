@@ -50,7 +50,7 @@
   position: absolute;
   left: 50%;
   width: 15vw;
-  max-width: 150px;
+  max-width: 160px;
   transform: translateX(-50%);
   top: 6%;
   bottom: 9%;
@@ -67,7 +67,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
   &__instructions {
     background: $orange--desaturated;
@@ -117,9 +117,6 @@
   }
   .middle {
     width: 30vw;
-    &__top {
-      font-size: 1em;
-    }
   }
 }
 
@@ -130,7 +127,7 @@
   .middle {
     width: 85px;
     &__top {
-      font-size: 0.7em;
+      font-size: 0.8em;
     }
     &__instructions {
       margin-top: -60%;
