@@ -7,6 +7,17 @@ import { RxjsGameService } from './app/game/rxjs-game.service';
 import { GameServiceBase } from './app/game/game.service.base';
 import { RxjsGameBoardComponent } from './app/game/game-board/rxjs-game-board.component';
 import { SignalsGameBoardComponent } from './app/game/game-board/signals-game-board.component';
+import { environment } from './environments/environment';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+
+const firebaseConfig = (environment as { firebaseConfig?: unknown })
+  .firebaseConfig;
+if (firebaseConfig) {
+  const app = initializeApp(firebaseConfig);
+  getAnalytics(app);
+}
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter([
